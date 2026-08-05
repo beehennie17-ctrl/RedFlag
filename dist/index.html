@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RedFlag</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--g:linear-gradient(135deg,#FF3B5C,#4C1D95);--w:#fff;--bk:#1A1A2E;--gr:#6B7280;--lg:#9CA3AF;--cg:#F9FAFB;--cb:#E5E7EB}
+body{font-family:'Inter',sans-serif;background:var(--w);overflow:hidden;height:100vh;height:100dvh;-webkit-tap-highlight-color:transparent;user-select:none}
+#ov{position:fixed;inset:0;background:var(--g);z-index:50;pointer-events:none;clip-path:circle(0% at 50% 50%);transition:clip-path .7s cubic-bezier(.4,0,.2,1)}
+#ov.open{clip-path:circle(150% at 50% 50%)}
+#ov.fd{transition:opacity .4s ease .3s;opacity:0}
+.s{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:0 24px;opacity:0;pointer-events:none;transform:translateX(100%);transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease;z-index:1;background:var(--w);overflow:hidden}
+.s.gbg{background:var(--g);color:var(--w);justify-content:center}
+.s.act{opacity:1;pointer-events:all;transform:translateX(0);z-index:10}
+.s.gbg .bot{display:none}
+.splash-w{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%}
+.logo{font-size:clamp(80px,22vw,160px);font-weight:900;line-height:.85;text-align:center;background:var(--g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transform:rotate(-5deg);opacity:0;animation:lin .7s cubic-bezier(.34,1.56,.64,1) .3s forwards}
+.sub{font-size:18px;color:var(--gr);margin-top:28px;opacity:0;animation:fu .5s ease .8s forwards}
+.tag{font-size:14px;color:var(--lg);margin-top:10px;opacity:0;animation:fu .5s ease 1s forwards}
+.sbtn{position:absolute;bottom:40px;left:24px;right:24px;height:56px;border-radius:999px;background:var(--g);color:white;font-family:'Inter';font-size:16px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;opacity:0;animation:fu .5s ease 1.2s forwards;transition:transform .15s ease;z-index:200}
+.sbtn:active{transform:scale(.95)}
+.topbar{position:absolute;top:0;left:0;right:0;padding:20px 24px 0;z-index:15}
+.qc{font-size:13px;color:var(--gr);text-align:left;margin-bottom:8px}
+.s.gbg .qc{color:rgba(255,255,255,.6)}
+.pbar{height:4px;background:var(--cb);border-radius:2px;overflow:hidden;width:100%}
+.pfill{height:100%;background:var(--g);border-radius:2px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.mid{display:flex;flex-direction:column;align-items:center;flex:1;width:100%;max-width:340px;justify-content:center;padding-top:20px}
+.qh{font-size:22px;font-weight:800;color:var(--bk);text-align:center;line-height:1.3;margin-bottom:32px}
+.bot{position:absolute;bottom:0;left:0;right:0;padding:16px 24px 32px;z-index:20}
+.btn{width:100%;height:56px;border-radius:999px;background:var(--g);color:white;font-family:'Inter';font-size:16px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s ease,opacity .3s ease}
+.btn:active{transform:scale(.95)}
+.btn.off{opacity:0;pointer-events:none}
+.inp{width:100%;height:64px;border-radius:14px;background:var(--cg);border:1.5px solid var(--cb);padding:0 18px;font-family:'Inter';font-size:17px;color:var(--bk);outline:none;transition:border-color .3s,box-shadow .3s}
+.inp:focus{border-color:#FF3B5C;box-shadow:0 0 0 4px rgba(255,59,92,.1)}
+.inp::placeholder{color:var(--lg)}
+.opts{width:100%;display:flex;flex-direction:column;gap:12px}
+.opt{width:100%;min-height:56px;border-radius:14px;background:var(--cg);border:1.5px solid var(--cb);padding:14px 18px;font-family:'Inter';font-size:15px;color:var(--bk);cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .2s ease;animation:cin .4s cubic-bezier(.22,1,.36,1) forwards;opacity:0}
+.opt:nth-child(1){animation-delay:.1s}.opt:nth-child(2){animation-delay:.2s}.opt:nth-child(3){animation-delay:.3s}.opt:nth-child(4){animation-delay:.4s}
+.opt:active{transform:scale(.97)}
+.opt.sel{border:2px solid transparent;background:linear-gradient(var(--cg),var(--cg)) padding-box,var(--g) border-box}
+.td{display:flex;gap:8px;align-items:center;justify-content:center}
+.td span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.8);animation:bdot 1.4s infinite ease-in-out}
+.td span:nth-child(2){animation-delay:.2s}
+.td span:nth-child(3){animation-delay:.4s}
+.dl{color:rgba(255,255,255,.6);font-size:14px;margin-top:16px;font-family:'Inter'}
+.rst{color:white;font-size:18px;font-weight:600;text-align:center;line-height:1.6;padding:0 8px;max-width:320px}
+.rname{color:white;font-weight:800}
+.hint{color:rgba(255,255,255,.5);font-size:14px;margin-top:32px;opacity:0;animation:fu .4s ease 2.5s forwards}
+.bnm{color:white;font-size:20px;font-weight:700;text-align:center;line-height:1.5;max-width:300px;opacity:0;animation:pop .6s ease .3s forwards}
+@keyframes lin{from{opacity:0;transform:rotate(-5deg) scale(.8)}to{opacity:1;transform:rotate(-5deg) scale(1)}}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bdot{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-14px)}}
+@keyframes pop{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+@keyframes verifyDot{0%,80%,100%{transform:scale(0.6);opacity:.3}40%{transform:scale(1);opacity:1}}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<div id="ov"></div>
+
+<!-- s0: SPLASH -->
+<div class="s act" id="s0">
+<div class="splash-w">
+<div class="logo">RED<br>FLAG</div>
+<div class="sub">Clock your toxicity.</div>
+<div class="tag">21 questions. One brutal truth.</div>
+</div>
+<button class="sbtn" id="startBtn">Start &#8594;</button>
+</div>
+
+<!-- s1: NAME INPUT -->
+<div class="s" id="s1">
+<div class="topbar"><div class="qc">1 / 21</div><div class="pbar"><div class="pfill" style="width:4.76%"></div></div></div>
+<div class="mid">
+<div class="qh">First things first, what's your name?</div>
+<input class="inp" id="nameIn" type="text" placeholder="Type your name..." maxlength="20">
+</div>
+<div class="bot"><button class="btn off" id="nameBtn">Continue &#8594;</button></div>
+</div>
+
+<!-- s2: TYPING 1 -->
+<div class="s gbg" id="s2">
+<div class="topbar"><div class="qc">1 / 21</div><div class="pbar"><div class="pfill" style="width:4.76%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s3: ROAST 1 -->
+<div class="s gbg" id="s3">
+<div class="topbar"><div class="qc">1 / 21</div><div class="pbar"><div class="pfill" style="width:4.76%"></div></div></div>
+<div class="rst" id="roast1"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s4: Q2 -->
+<div class="s" id="s4">
+<div class="topbar"><div class="qc">2 / 21</div><div class="pbar"><div class="pfill" style="width:9.52%"></div></div></div>
+<div class="mid">
+<div class="qh">Right now, what is your relationship status?</div>
+<div class="opts" id="opts4">
+<div class="opt" data-v="single">Single and thriving</div>
+<div class="opt" data-v="situationship">In a situationship</div>
+<div class="opt" data-v="taken">Taken</div>
+<div class="opt" data-v="complicated">It's complicated</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn4">Continue &#8594;</button></div>
+</div>
+
+<!-- s5: TYPING -->
+<div class="s gbg" id="s5">
+<div class="topbar"><div class="qc">2 / 21</div><div class="pbar"><div class="pfill" style="width:9.52%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s6: ROAST 2 -->
+<div class="s gbg" id="s6">
+<div class="topbar"><div class="qc">2 / 21</div><div class="pbar"><div class="pfill" style="width:9.52%"></div></div></div>
+<div class="rst" id="roast2"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s7: Q3 -->
+<div class="s" id="s7">
+<div class="topbar"><div class="qc">3 / 21</div><div class="pbar"><div class="pfill" style="width:14.28%"></div></div></div>
+<div class="mid">
+<div class="qh">Someone you like texts "hey". How long do you wait to reply?</div>
+<div class="opts" id="opts7">
+<div class="opt" data-v="instantly">Instantly</div>
+<div class="opt" data-v="fewmin">A few minutes</div>
+<div class="opt" data-v="hours">Couple hours, gotta look busy</div>
+<div class="opt" data-v="delivered">I leave them on delivered for a day</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn7">Continue &#8594;</button></div>
+</div>
+<!-- s8: TYPING -->
+<div class="s gbg" id="s8">
+<div class="topbar"><div class="qc">3 / 21</div><div class="pbar"><div class="pfill" style="width:14.28%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Processing...</div>
+</div>
+
+<!-- s9: ROAST 3 -->
+<div class="s gbg" id="s9">
+<div class="topbar"><div class="qc">3 / 21</div><div class="pbar"><div class="pfill" style="width:14.28%"></div></div></div>
+<div class="rst" id="roast3"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s10: Q4 -->
+<div class="s" id="s10">
+<div class="topbar"><div class="qc">4 / 21</div><div class="pbar"><div class="pfill" style="width:19.04%"></div></div></div>
+<div class="mid">
+<div class="qh">They left you on read. What's your next move?</div>
+<div class="opts" id="opts10">
+<div class="opt" data-v="doubletext">Double text</div>
+<div class="opt" data-v="thirsttrap">Post a hot story to make them jealous</div>
+<div class="opt" data-v="block">Block and delete</div>
+<div class="opt" data-v="pretend">Pretend I didn't care</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn10">Continue &#8594;</button></div>
+</div>
+
+<!-- s11: TYPING -->
+<div class="s gbg" id="s11">
+<div class="topbar"><div class="qc">4 / 21</div><div class="pbar"><div class="pfill" style="width:19.04%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s12: ROAST 4 -->
+<div class="s gbg" id="s12">
+<div class="topbar"><div class="qc">4 / 21</div><div class="pbar"><div class="pfill" style="width:19.04%"></div></div></div>
+<div class="rst" id="roast4"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s13: Q5 -->
+<div class="s" id="s13">
+<div class="topbar"><div class="qc">5 / 21</div><div class="pbar"><div class="pfill" style="width:23.8%"></div></div></div>
+<div class="mid">
+<div class="qh">They type for 5 minutes, then stop. You get nothing. You:</div>
+<div class="opts" id="opts13">
+<div class="opt" data-v="textq">Text "?"</div>
+<div class="opt" data-v="call">Call them</div>
+<div class="opt" data-v="overthink">Overthink for 6 hours</div>
+<div class="opt" data-v="sleep">Go to sleep</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn13">Continue &#8594;</button></div>
+</div>
+
+<!-- s14: TYPING -->
+<div class="s gbg" id="s14">
+<div class="topbar"><div class="qc">5 / 21</div><div class="pbar"><div class="pfill" style="width:23.8%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s15: ROAST 5 -->
+<div class="s gbg" id="s15">
+<div class="topbar"><div class="qc">5 / 21</div><div class="pbar"><div class="pfill" style="width:23.8%"></div></div></div>
+<div class="rst" id="roast5"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+<!-- s16: Q6 -->
+<div class="s" id="s16">
+<div class="topbar"><div class="qc">6 / 21</div><div class="pbar"><div class="pfill" style="width:28.57%"></div></div></div>
+<div class="mid">
+<div class="qh">You get a "wyd" text at 2 AM. Do you reply?</div>
+<div class="opts" id="opts16">
+<div class="opt" data-v="ignore">Ignore it till morning</div>
+<div class="opt" data-v="nmu">Reply "nm u?" instantly</div>
+<div class="opt" data-v="hardtoget">Reply but play hard to get</div>
+<div class="opt" data-v="pullup">Pull up immediately</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn16">Continue &#8594;</button></div>
+</div>
+
+<!-- s17: TYPING -->
+<div class="s gbg" id="s17">
+<div class="topbar"><div class="qc">6 / 21</div><div class="pbar"><div class="pfill" style="width:28.57%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Processing...</div>
+</div>
+
+<!-- s18: ROAST 6 -->
+<div class="s gbg" id="s18">
+<div class="topbar"><div class="qc">6 / 21</div><div class="pbar"><div class="pfill" style="width:28.57%"></div></div></div>
+<div class="rst" id="roast6"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s19: Q7 -->
+<div class="s" id="s19">
+<div class="topbar"><div class="qc">7 / 21</div><div class="pbar"><div class="pfill" style="width:33.33%"></div></div></div>
+<div class="mid">
+<div class="qh">During an argument over text, you usually:</div>
+<div class="opts" id="opts19">
+<div class="opt" data-v="paragraphs">Send whole paragraphs</div>
+<div class="opt" data-v="k">Reply "K"</div>
+<div class="opt" data-v="voicenotes">Send voice notes</div>
+<div class="opt" data-v="ghost">Ghost until they calm down</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn19">Continue &#8594;</button></div>
+</div>
+
+<!-- s20: TYPING -->
+<div class="s gbg" id="s20">
+<div class="topbar"><div class="qc">7 / 21</div><div class="pbar"><div class="pfill" style="width:33.33%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s21: ROAST 7 -->
+<div class="s gbg" id="s21">
+<div class="topbar"><div class="qc">7 / 21</div><div class="pbar"><div class="pfill" style="width:33.33%"></div></div></div>
+<div class="rst" id="roast7"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s22: BARNUM 1 -->
+<div class="s gbg" id="s22">
+<div class="topbar"><div class="qc">7 / 21</div><div class="pbar"><div class="pfill" style="width:33.33%"></div></div></div>
+<div class="bnm">&#8220;You talk a big game, but your texting habits say you&#8217;re emotionally unavailable. We both know that.&#8221;</div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s23: Q8 -->
+<div class="s" id="s23">
+<div class="topbar"><div class="qc">8 / 21</div><div class="pbar"><div class="pfill" style="width:38.09%"></div></div></div>
+<div class="mid">
+<div class="qh">How often do you double text?</div>
+<div class="opts" id="opts23">
+<div class="opt" data-v="never">Never. I&#8217;d rather die</div>
+<div class="opt" data-v="important">Only if it&#8217;s important</div>
+<div class="opt" data-v="allthetime">All the time, no filter</div>
+<div class="opt" data-v="triple">Triple text minimum</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn23">Continue &#8594;</button></div>
+</div>
+<!-- s24: TYPING -->
+<div class="s gbg" id="s24">
+<div class="topbar"><div class="qc">8 / 21</div><div class="pbar"><div class="pfill" style="width:38.09%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s25: ROAST 8 -->
+<div class="s gbg" id="s25">
+<div class="topbar"><div class="qc">8 / 21</div><div class="pbar"><div class="pfill" style="width:38.09%"></div></div></div>
+<div class="rst" id="roast8"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s26: Q9 -->
+<div class="s" id="s26">
+<div class="topbar"><div class="qc">9 / 21</div><div class="pbar"><div class="pfill" style="width:42.85%"></div></div></div>
+<div class="mid">
+<div class="qh">How many situationships you got rn?</div>
+<div class="opts" id="opts26">
+<div class="opt" data-v="zero">0, I&#8217;m healed</div>
+<div class="opt" data-v="onetwo">1-2, keeping it chill</div>
+<div class="opt" data-v="threetofive">3-5, I like options</div>
+<div class="opt" data-v="lostcount">Lost count</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn26">Continue &#8594;</button></div>
+</div>
+
+<!-- s27: TYPING -->
+<div class="s gbg" id="s27">
+<div class="topbar"><div class="qc">9 / 21</div><div class="pbar"><div class="pfill" style="width:42.85%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s28: ROAST 9 -->
+<div class="s gbg" id="s28">
+<div class="topbar"><div class="qc">9 / 21</div><div class="pbar"><div class="pfill" style="width:42.85%"></div></div></div>
+<div class="rst" id="roast9"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s29: BARNUM 2 -->
+<div class="s gbg" id="s29">
+<div class="topbar"><div class="qc">9 / 21</div><div class="pbar"><div class="pfill" style="width:42.85%"></div></div></div>
+<div class="bnm">&#8220;You chase what runs and run from what stays. That&#8217;s not a type &#8212; that&#8217;s a trauma response.&#8221;</div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s30: Q10 -->
+<div class="s" id="s30">
+<div class="topbar"><div class="qc">10 / 21</div><div class="pbar"><div class="pfill" style="width:47.61%"></div></div></div>
+<div class="mid">
+<div class="qh">Look at your exes. What&#8217;s the common denominator?</div>
+<div class="opts" id="opts30">
+<div class="opt" data-v="toxic">They were all toxic</div>
+<div class="opt" data-v="clingy">They were too clingy</div>
+<div class="opt" data-v="cheated">They cheated</div>
+<div class="opt" data-v="nosituationships">I don&#8217;t have exes, only situationships</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn30">Continue &#8594;</button></div>
+</div>
+
+<!-- s31: TYPING -->
+<div class="s gbg" id="s31">
+<div class="topbar"><div class="qc">10 / 21</div><div class="pbar"><div class="pfill" style="width:47.61%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Processing...</div>
+</div>
+<!-- s32: ROAST 10 -->
+<div class="s gbg" id="s32">
+<div class="topbar"><div class="qc">10 / 21</div><div class="pbar"><div class="pfill" style="width:47.61%"></div></div></div>
+<div class="rst" id="roast10"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s33: Q11 -->
+<div class="s" id="s33">
+<div class="topbar"><div class="qc">11 / 21</div><div class="pbar"><div class="pfill" style="width:52.38%"></div></div></div>
+<div class="mid">
+<div class="qh">How soon do you start checking their socials after matching?</div>
+<div class="opts" id="opts33">
+<div class="opt" data-v="immediately">Immediately, I do recon</div>
+<div class="opt" data-v="afterdate">After the first date</div>
+<div class="opt" data-v="dontcheck">I don't check</div>
+<div class="opt" data-v="already">I'm already following them</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn33">Continue &#8594;</button></div>
+</div>
+
+<!-- s34: TYPING -->
+<div class="s gbg" id="s34">
+<div class="topbar"><div class="qc">11 / 21</div><div class="pbar"><div class="pfill" style="width:52.38%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s35: ROAST 11 -->
+<div class="s gbg" id="s35">
+<div class="topbar"><div class="qc">11 / 21</div><div class="pbar"><div class="pfill" style="width:52.38%"></div></div></div>
+<div class="rst" id="roast11"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s36: Q12 -->
+<div class="s" id="s36">
+<div class="topbar"><div class="qc">12 / 21</div><div class="pbar"><div class="pfill" style="width:57.14%"></div></div></div>
+<div class="mid">
+<div class="qh">Your type is...</div>
+<div class="opts" id="opts36">
+<div class="opt" data-v="attention">Whoever gives me attention</div>
+<div class="opt" data-v="fix">Toxic people I can fix</div>
+<div class="opt" data-v="stable">Someone stable and boring</div>
+<div class="opt" data-v="notype">I don't have a type</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn36">Continue &#8594;</button></div>
+</div>
+
+<!-- s37: TYPING -->
+<div class="s gbg" id="s37">
+<div class="topbar"><div class="qc">12 / 21</div><div class="pbar"><div class="pfill" style="width:57.14%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s38: ROAST 12 -->
+<div class="s gbg" id="s38">
+<div class="topbar"><div class="qc">12 / 21</div><div class="pbar"><div class="pfill" style="width:57.14%"></div></div></div>
+<div class="rst" id="roast12"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s39: Q13 -->
+<div class="s" id="s39">
+<div class="topbar"><div class="qc">13 / 21</div><div class="pbar"><div class="pfill" style="width:61.9%"></div></div></div>
+<div class="mid">
+<div class="qh">How fast do you say "I love you"?</div>
+<div class="opts" id="opts39">
+<div class="opt" data-v="months">Months, I'm careful</div>
+<div class="opt" data-v="weeks">A few weeks, when it feels right</div>
+<div class="opt" data-v="day1">Day 1 if the vibe is there</div>
+<div class="opt" data-v="neverlove">I've never said it</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn39">Continue &#8594;</button></div>
+</div>
+<!-- s40: TYPING -->
+<div class="s gbg" id="s40">
+<div class="topbar"><div class="qc">13 / 21</div><div class="pbar"><div class="pfill" style="width:61.9%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s41: ROAST 13 -->
+<div class="s gbg" id="s41">
+<div class="topbar"><div class="qc">13 / 21</div><div class="pbar"><div class="pfill" style="width:61.9%"></div></div></div>
+<div class="rst" id="roast13"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s42: Q14 -->
+<div class="s" id="s42">
+<div class="topbar"><div class="qc">14 / 21</div><div class="pbar"><div class="pfill" style="width:66.66%"></div></div></div>
+<div class="mid">
+<div class="qh">How do you handle jealousy?</div>
+<div class="opts" id="opts42">
+<div class="opt" data-v="communicate">I communicate openly</div>
+<div class="opt" data-v="passive">I get passive aggressive</div>
+<div class="opt" data-v="spy">I spy on their socials</div>
+<div class="opt" data-v="unbothered">I act unbothered but I'm dying inside</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn42">Continue &#8594;</button></div>
+</div>
+
+<!-- s43: TYPING -->
+<div class="s gbg" id="s43">
+<div class="topbar"><div class="qc">14 / 21</div><div class="pbar"><div class="pfill" style="width:66.66%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Processing...</div>
+</div>
+
+<!-- s44: ROAST 14 -->
+<div class="s gbg" id="s44">
+<div class="topbar"><div class="qc">14 / 21</div><div class="pbar"><div class="pfill" style="width:66.66%"></div></div></div>
+<div class="rst" id="roast14"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s45: Q15 -->
+<div class="s" id="s45">
+<div class="topbar"><div class="qc">15 / 21</div><div class="pbar"><div class="pfill" style="width:71.42%"></div></div></div>
+<div class="mid">
+<div class="qh">Last time you ghosted someone?</div>
+<div class="opts" id="opts45">
+<div class="opt" data-v="neverghost">Never, I communicate</div>
+<div class="opt" data-v="lastweek">Last week</div>
+<div class="opt" data-v="currently">Currently doing it</div>
+<div class="opt" data-v="ghosted">I'm the one who gets ghosted</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn45">Continue &#8594;</button></div>
+</div>
+
+<!-- s46: TYPING -->
+<div class="s gbg" id="s46">
+<div class="topbar"><div class="qc">15 / 21</div><div class="pbar"><div class="pfill" style="width:71.42%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s47: ROAST 15 -->
+<div class="s gbg" id="s47">
+<div class="topbar"><div class="qc">15 / 21</div><div class="pbar"><div class="pfill" style="width:71.42%"></div></div></div>
+<div class="rst" id="roast15"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+<!-- s48: Q16 -->
+<div class="s" id="s48">
+<div class="topbar"><div class="qc">16 / 21</div><div class="pbar"><div class="pfill" style="width:76.19%"></div></div></div>
+<div class="mid">
+<div class="qh">Do you check your partner's phone?</div>
+<div class="opts" id="opts48">
+<div class="opt" data-v="neverphone">Never, trust is everything</div>
+<div class="opt" data-v="suspicious">Only if they act suspicious</div>
+<div class="opt" data-v="checkphone">All the time</div>
+<div class="opt" data-v="nopartner">I don't have a partner to check</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn48">Continue &#8594;</button></div>
+</div>
+
+<!-- s49: TYPING -->
+<div class="s gbg" id="s49">
+<div class="topbar"><div class="qc">16 / 21</div><div class="pbar"><div class="pfill" style="width:76.19%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s50: ROAST 16 -->
+<div class="s gbg" id="s50">
+<div class="topbar"><div class="qc">16 / 21</div><div class="pbar"><div class="pfill" style="width:76.19%"></div></div></div>
+<div class="rst" id="roast16"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s51: BARNUM 3 -->
+<div class="s gbg" id="s51">
+<div class="topbar"><div class="qc">16 / 21</div><div class="pbar"><div class="pfill" style="width:76.19%"></div></div></div>
+<div class="bnm">&#8220;You said you&#8217;re over it, but you still check their following count at 3 AM. That&#8217;s not healing &#8212; that&#8217;s surveillance.&#8221;</div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s52: Q17 -->
+<div class="s" id="s52">
+<div class="topbar"><div class="qc">17 / 21</div><div class="pbar"><div class="pfill" style="width:80.95%"></div></div></div>
+<div class="mid">
+<div class="qh">You just got out of something. What&#8217;s your first move on socials?</div>
+<div class="opts" id="opts52">
+<div class="opt" data-v="glowup">Post a glow-up pic</div>
+<div class="opt" data-v="removetrace">Remove every trace</div>
+<div class="opt" data-v="stalk">Stalk their page for hours</div>
+<div class="opt" data-v="vague">Post something vague and mysterious</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn52">Continue &#8594;</button></div>
+</div>
+
+<!-- s53: TYPING -->
+<div class="s gbg" id="s53">
+<div class="topbar"><div class="qc">17 / 21</div><div class="pbar"><div class="pfill" style="width:80.95%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Processing...</div>
+</div>
+
+<!-- s54: ROAST 17 -->
+<div class="s gbg" id="s54">
+<div class="topbar"><div class="qc">17 / 21</div><div class="pbar"><div class="pfill" style="width:80.95%"></div></div></div>
+<div class="rst" id="roast17"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s55: Q18 -->
+<div class="s" id="s55">
+<div class="topbar"><div class="qc">18 / 21</div><div class="pbar"><div class="pfill" style="width:85.71%"></div></div></div>
+<div class="mid">
+<div class="qh">You posted a couple pic. They didn&#8217;t repost it. You:</div>
+<div class="opts" id="opts55">
+<div class="opt" data-v="askabout">Ask them about it</div>
+<div class="opt" data-v="deleteit">Delete it immediately</div>
+<div class="opt" data-v="hotterpic">Post a pic with someone hotter</div>
+<div class="opt" data-v="dontbother">It doesn&#8217;t bother me</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn55">Continue &#8594;</button></div>
+</div>
+<!-- s56: TYPING -->
+<div class="s gbg" id="s56">
+<div class="topbar"><div class="qc">18 / 21</div><div class="pbar"><div class="pfill" style="width:85.71%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s57: ROAST 18 -->
+<div class="s gbg" id="s57">
+<div class="topbar"><div class="qc">18 / 21</div><div class="pbar"><div class="pfill" style="width:85.71%"></div></div></div>
+<div class="rst" id="roast18"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s58: Q19 -->
+<div class="s" id="s58">
+<div class="topbar"><div class="qc">19 / 21</div><div class="pbar"><div class="pfill" style="width:90.47%"></div></div></div>
+<div class="mid">
+<div class="qh">Why do you think you're single?</div>
+<div class="opts" id="opts58">
+<div class="opt" data-v="rightrp">I haven't met the right person yet</div>
+<div class="opt" data-v="picky">I'm too picky</div>
+<div class="opt" data-v="pushaway">I push people away</div>
+<div class="opt" data-v="idontknow">Honestly I don't know</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn58">Continue &#8594;</button></div>
+</div>
+
+<!-- s59: TYPING -->
+<div class="s gbg" id="s59">
+<div class="topbar"><div class="qc">19 / 21</div><div class="pbar"><div class="pfill" style="width:90.47%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Analyzing your answers...</div>
+</div>
+
+<!-- s60: ROAST 19 -->
+<div class="s gbg" id="s60">
+<div class="topbar"><div class="qc">19 / 21</div><div class="pbar"><div class="pfill" style="width:90.47%"></div></div></div>
+<div class="rst" id="roast19"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+
+<!-- s61: Q20 -->
+<div class="s" id="s61">
+<div class="topbar"><div class="qc">20 / 21</div><div class="pbar"><div class="pfill" style="width:95.23%"></div></div></div>
+<div class="mid">
+<div class="qh">What's your attachment style?</div>
+<div class="opts" id="opts61">
+<div class="opt" data-v="secure">Secure</div>
+<div class="opt" data-v="anxious">Anxious</div>
+<div class="opt" data-v="avoidant">Avoidant</div>
+<div class="opt" data-v="dontknowstyle">I don't know what that means</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn61">Continue &#8594;</button></div>
+</div>
+
+<!-- s62: TYPING -->
+<div class="s gbg" id="s62">
+<div class="topbar"><div class="qc">20 / 21</div><div class="pbar"><div class="pfill" style="width:95.23%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Clocking your toxicity...</div>
+</div>
+
+<!-- s63: ROAST 20 -->
+<div class="s gbg" id="s63">
+<div class="topbar"><div class="qc">20 / 21</div><div class="pbar"><div class="pfill" style="width:95.23%"></div></div></div>
+<div class="rst" id="roast20"></div>
+<div class="hint">Tap to continue &#8594;</div>
+</div>
+<!-- s64: Q21 -->
+<div class="s" id="s64">
+<div class="topbar"><div class="qc">21 / 21</div><div class="pbar"><div class="pfill" style="width:100%"></div></div></div>
+<div class="mid">
+<div class="qh">Rate your own red flag level:</div>
+<div class="opts" id="opts64">
+<div class="opt" data-v="greenflag">1-3, I'm a green flag</div>
+<div class="opt" data-v="midflag">4-6, I'm mid</div>
+<div class="opt" data-v="knowwhatiam">7-9, I know what I am</div>
+<div class="opt" data-v="unhinged">10, I'm unhinged</div>
+</div>
+</div>
+<div class="bot"><button class="btn off" id="btn64">See my results &#8594;</button></div>
+</div>
+
+<!-- s65: TYPING -->
+<div class="s gbg" id="s65">
+<div class="topbar"><div class="qc">21 / 21</div><div class="pbar"><div class="pfill" style="width:100%"></div></div></div>
+<div class="td"><span></span><span></span><span></span></div>
+<div class="dl">Calculating your toxicity level...</div>
+</div>
+
+<!-- s66: ROAST 21 -->
+<div class="s gbg" id="s66">
+<div class="topbar"><div class="qc">21 / 21</div><div class="pbar"><div class="pfill" style="width:100%"></div></div></div>
+<div class="rst" id="roast21"></div>
+<div class="hint">Tap to see your results &#8594;</div>
+</div>
+
+<!-- s67: PAYWALL -->
+<div class="s" id="s67" style="overflow-y:auto;background:var(--g)">
+<div class="pw" style="width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16px 20px 32px">
+
+<!-- Social proof ticker -->
+<div class="social-ticker" style="width:100%;padding:10px 16px;background:rgba(255,255,255,0.1);border-radius:12px;margin-bottom:32px;font-size:13px;color:rgba(255,255,255,0.85);display:flex;align-items:center;gap:8px">
+<span style="width:8px;height:8px;border-radius:50%;background:#4ADE80;flex-shrink:0;animation:dotPulse 2s infinite"></span>
+<span id="socialMsg">2,847 people have unlocked their results today</span>
+</div>
+
+<!-- Lock icon -->
+<div style="width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:28px;position:relative">
+<span style="font-size:40px">&#x1F512;</span>
+</div>
+
+<!-- Title -->
+<div style="font-size:30px;font-weight:900;color:white;line-height:1.15;letter-spacing:-0.5px;margin-bottom:12px">Your Results Are Ready</div>
+
+<!-- Subtitle -->
+<div style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.6;max-width:300px;margin-bottom:8px">You've been brutally honest. Now see your full toxicity breakdown.</div>
+
+<!-- Anxiety message (rotates via JS) -->
+<div id="pwAnxietyMsg" style="font-size:11px;color:rgba(255,255,255,0.3);font-style:italic;margin-bottom:32px">Your friends are already seeing their results...</div>
+
+<!-- Blurred result card teaser -->
+<div style="width:100%;max-width:300px;height:190px;border-radius:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);margin-bottom:36px;position:relative;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12)">
+<div style="height:50%;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center">
+<span style="font-size:56px;font-weight:900;color:rgba(255,255,255,0.06)">38</span>
+</div>
+<div style="padding:16px 20px">
+<div style="height:7px;border-radius:4px;background:rgba(255,255,255,0.08);margin-bottom:12px;width:85%"></div>
+<div style="height:7px;border-radius:4px;background:rgba(255,255,255,0.08);margin-bottom:12px;width:60%"></div>
+<div style="height:7px;border-radius:4px;background:rgba(255,255,255,0.08);width:45%"></div>
+</div>
+<div style="position:absolute;inset:0;background:rgba(255,255,255,0.05);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-size:44px">&#x1F512;</div>
+</div>
+
+<!-- Button wrapper (unlock button) -->
+<div id="pwBtnWrap" style="width:100%;max-width:320px;margin-bottom:16px">
+<button id="unlockBtn" style="width:100%;height:60px;border-radius:999px;background:white;color:#1A1A2E;font-family:'Inter';font-size:17px;font-weight:800;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;gap:8px">
+Unlock Results — <span style="color:#FF3B5C">$4.99</span>
+</button>
+</div>
+
+<!-- Bottom text -->
+<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:20px">Your personalized results will unlock automatically after your payment has been securely verified.</div>
+
+<!-- Verifying state (hidden by default) -->
+<div id="pwVerifying" style="display:none;text-align:center;margin-bottom:20px">
+<div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px">
+<span style="width:8px;height:8px;border-radius:50%;background:white;animation:verifyDot 1.4s infinite ease-in-out"></span>
+<span style="width:8px;height:8px;border-radius:50%;background:white;animation:verifyDot 1.4s infinite ease-in-out 0.2s"></span>
+<span style="width:8px;height:8px;border-radius:50%;background:white;animation:verifyDot 1.4s infinite ease-in-out 0.4s"></span>
+</div>
+<div style="font-size:17px;font-weight:800;color:white;margin-bottom:6px">Verifying your payment...</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;max-width:280px;margin:0 auto">Please wait while we securely verify your purchase. This usually only takes a few seconds.</div>
+</div>
+
+<!-- Verified badge (hidden by default) -->
+<div id="verifiedBadge" style="display:none;font-size:14px;color:rgba(255,255,255,0.7);margin-top:16px">
+&#x2705; Payment verified! Loading results...
+</div>
+
+</div>
+</div>
+
+<!-- RESULTS CARD -->
+<div id="resultCard" style="display:none;position:fixed;inset:0;background:#F3F4F6;z-index:100;flex-direction:column;align-items:center;justify-content:center;overflow-y:auto;padding:16px">
+<div class="rc-card" id="captureArea" style="width:100%;max-width:340px;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.15)">
+
+<!-- Mini logo -->
+<div class="rc-mini-logo" style="position:absolute;top:20px;left:20px;background:white;padding:6px 10px;border-radius:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:2;transform:rotate(-5deg)">
+<div style="font-size:8px;font-weight:900;line-height:0.85;text-align:center;background:var(--g);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">RED<br>FLAG</div>
+</div>
+
+<!-- Level badge -->
+<div class="rc-level" id="resLevel" style="position:absolute;top:20px;right:20px;background:rgba(255,59,92,0.3);border:1px solid rgba(255,59,92,0.5);border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;color:#FF6B8A;text-transform:uppercase;letter-spacing:1px;z-index:2">Level 1</div>
+
+<!-- Top section with score -->
+<div class="rc-top" style="background:linear-gradient(135deg,#1a1a2e 0%,#2D1B69 50%,#FF3B5C 100%);padding:64px 28px 40px;text-align:center;position:relative">
+<div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.02) 20px,rgba(255,255,255,0.02) 40px);pointer-events:none"></div>
+<div class="rc-score" id="resScore" style="font-size:84px;font-weight:900;color:white;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,0.3);position:relative;z-index:1">0</div>
+<div class="rc-of" style="font-size:14px;color:rgba(255,255,255,0.5);font-weight:600;position:relative;z-index:1;margin-top:8px">out of 84</div>
+<div class="rc-title" id="resTitle" style="font-size:20px;font-weight:800;color:white;margin:24px 0 0;position:relative;z-index:1">Loading...</div>
+
+<!-- Category bars -->
+<div class="rc-bars" style="position:relative;z-index:1;text-align:left;margin-top:40px">
+
+<!-- Texting -->
+<div class="rc-br" style="margin-bottom:24px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="font-size:13px;color:rgba(255,255,255,0.6);width:90px;text-align:left">Texting</div>
+<div style="flex:1;height:7px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden"><div id="barTexting" style="height:100%;background:white;border-radius:4px;width:0%"></div></div>
+<div style="font-size:13px;font-weight:700;color:white;width:40px;text-align:right" id="pctTexting">0%</div>
+</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.45);font-style:italic;margin:6px 0 0 100px" id="comTexting"></div>
+</div>
+
+<!-- Dating -->
+<div class="rc-br" style="margin-bottom:24px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="font-size:13px;color:rgba(255,255,255,0.6);width:90px;text-align:left">Dating</div>
+<div style="flex:1;height:7px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden"><div id="barDating" style="height:100%;background:white;border-radius:4px;width:0%"></div></div>
+<div style="font-size:13px;font-weight:700;color:white;width:40px;text-align:right" id="pctDating">0%</div>
+</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.45);font-style:italic;margin:6px 0 0 100px" id="comDating"></div>
+</div>
+
+<!-- Red Flags -->
+<div class="rc-br" style="margin-bottom:24px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="font-size:13px;color:rgba(255,255,255,0.6);width:90px;text-align:left">Red Flags</div>
+<div style="flex:1;height:7px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden"><div id="barRed" style="height:100%;background:white;border-radius:4px;width:0%"></div></div>
+<div style="font-size:13px;font-weight:700;color:white;width:40px;text-align:right" id="pctRed">0%</div>
+</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.45);font-style:italic;margin:6px 0 0 100px" id="comRed"></div>
+</div>
+
+<!-- Self-Aware -->
+<div class="rc-br" style="margin-bottom:24px">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="font-size:13px;color:rgba(255,255,255,0.6);width:90px;text-align:left">Self-Aware</div>
+<div style="flex:1;height:7px;background:rgba(255,255,255,0.15);border-radius:4px;overflow:hidden"><div id="barAware" style="height:100%;background:white;border-radius:4px;width:0%"></div></div>
+<div style="font-size:13px;font-weight:700;color:white;width:40px;text-align:right" id="pctAware">0%</div>
+</div>
+<div style="font-size:11px;color:rgba(255,255,255,0.45);font-style:italic;margin:6px 0 0 100px" id="comAware"></div>
+</div>
+
+</div>
+</div>
+
+<!-- Bottom section with buttons -->
+<div class="rc-bottom" style="background:white;padding:24px 28px 28px">
+<button class="rc-dlbtn" id="dlBtn" style="width:100%;height:56px;border-radius:999px;background:var(--g);color:white;font-family:'Inter';font-size:16px;font-weight:700;border:none;cursor:pointer">Download Results</button>
+<button class="rc-restart" onclick="location.reload()" style="width:100%;height:48px;border-radius:999px;background:transparent;color:var(--gr);font-family:'Inter';font-size:14px;font-weight:600;border:1.5px solid var(--cb);cursor:pointer;margin-top:12px">Take it again</button>
+</div>
+
+</div>
+</div>
+<script>
+var nm='',ans={},st=0;
+var twT=null,twA=false,twE=null,twF='';
+
+var R={
+name:'Alright <span class="rname">[name]</span>, let\'s see how toxic you really are. Don\'t lie, I\'ll know. \u{1F480}',
+single:'<span class="rname">[name]</span>, "thriving"? Bruh, you\'re on a RedFlag app. You are NOT thriving. \u{1F480}',
+situationship:'A situationship in 2026? Grow a spine and ask "what are we" tf. \u{1F480}',
+taken:'Taken but taking a toxicity test? Be fr rn... you\'re definitely not here "just for fun." \u{1F480}',
+complicated:'Deadass "complicated" just means you\'re being played. Nah bro. \u{1F480}',
+instantly:'Replying instantly? Bruh <span class="rname">[name]</span>, you have ZERO motion. Go outside tf. \u{1F480}',
+fewmin:'Normal response time. But we both know you stared at the screen waiting for it. \u{1F605}',
+hours:'Two hours? And this is why you\'re single. \u{1F480}',
+delivered:'Playing games like this at your big age? You\'re cooked. \u{1F480}',
+doubletext:'Double texting? Have some shame <span class="rname">[name]</span>. Like literally. \u{1F480}',
+thirsttrap:'Posting a thirst trap because they didn\'t reply to "wyd" is CRAZY. \u{1F605}',
+block:'Blocking over a left-on-read? Your attachment style is literally "flight risk." \u{1F480}',
+pretend:'You didn\'t care? Yeah Sure \u{1F644}',
+textq:'Sending \'?\' Patience is key... and you clearly lost the key. \u{1F480}',
+call:'A random phone call? You\'re one missed call away from being blocked on every platform. \u{1F480}',
+overthink:'Overthinking over a typing bubble... <span class="rname">[name]</span>??? Go touch some grass. \u{1F480}',
+sleep:'Going to sleep? Honestly... valid. The only green flag you\'ve shown so far. \u{2705}',
+ignore:'Ignoring a 2 AM "wyd"?? Hold on... you\'re healing. \u{1F44D}',
+nmu:'Entertaining a 2 AM "wyd"? Bro, you are literally begging to be a situationship. \u{1F480}',
+hardtoget:'Playing hard to get after replying immediately is diabolical. Pick a struggle. \u{1F605}',
+pullup:'Ain\'t no way "wyd" was all it took. The bar is below hell atp. \u{1F480}',
+paragraphs:'Paragraphs?? Bruh <span class="rname">[name]</span>, nobody is reading your MLA format essay. Delete that. \u{1F480}',
+k:'A single "K"? That one letter probably started three new arguments. \u{1F480}',
+voicenotes:'Three-minute voice note? Congrats... nobody\'s listening to episode one of your podcast. \u{1F480}',
+ghost:'Ghosting an argument? And this is why you\'re single. Avoidance tactic 101. \u{1F480}',
+never:'Your pride is stronger than your communication skills... Text them back wtf. \u{1F480}',
+important:'Valid, but we both know "important" just means you saw them post on their story. \u{1F480}',
+allthetime:'Double texting every time? Your self-control clocked out ages ago. Put the phone down. \u{1F480}',
+triple:'Triple text?? <span class="rname">[name]</span>... You\'re having a whole conversation by yourself at this point. \u{1F480}',
+zero:'Healed? You\'re not healed... you\'re just between bad decisions. \u{1F480}',
+onetwo:'1-2? You\'re calling it "chill." They\'re calling it "what are we?" \u{1F605}',
+threetofive:'3 to 5?? Be fr rn... your roster has substitutes and reserves. Nah bro... NAHH. \u{1F480}',
+lostcount:'Lost count? <span class="rname">[name]</span>, that is not a flex bro. \u{1F480}',
+toxic:'If ALL of them were toxic, bruh <span class="rname">[name]</span>... either you have the worst taste in humanity or you\'re leaving out a few chapters. \u{1F480}',
+clingy:'"Too clingy"... or they just wanted a reply before next Tuesday? \u{1F480}',
+cheated:'All of them? Damn <span class="rname">[name]</span>, either you have the worst picker alive or you\'re giving them reasons. \u{1F480}',
+nosituationships:'You don\'t have exes because nobody ever made it past the free trial. \u{1F480}',
+immediately:'Recon?? You found their LinkedIn, Spotify and Year 8 graduation photo in under 10 minutes. Go touch some grass. \u{1F480}',
+afterdate:'You waited until after the date? Character development... I\'ll allow it. \u{1F44D}',
+dontcheck:'You don\'t check?? Either your self-control is elite or you\'re lying through your teeth. \u{1F644}',
+already:'Already following them?? Bro skipped three chapters. \u{1F605}',
+attention:'Giving your heart to anyone who says "hey" is actually insane. \u{1F480}',
+fix:'"I can fix them." Please... you couldn\'t even fix your sleep schedule. \u{1F480}',
+stable:'You called stable people "boring"? Calling emotionally stable people "boring" is exactly why no one wants you bruh \u{1F480}',
+notype:'Your type is "whoever replies first." Let\'s be fr for a sec. \u{1F480}',
+months:'Careful? Be fr... you\'re making them say it first. Wussy \u{1F605}',
+weeks:'A few weeks? Aww... you fell in love before learning their middle name. \u{1F605}',
+day1:'DAY ONE?? You don\'t love them. You love the IDEA of them. That\'s unhinged. \u{1F480}',
+neverlove:'Never?? Either you\'re 14 or deeply emotionally stunted. Both concerning. \u{1F480}',
+communicate:'Communicating openly? That\'s literally the healthiest answer. Why are you even here? \u{1F923}',
+passive:'Passive aggressive? So instead of saying what\'s wrong, you start acting weird. Grow up. \u{1F480}',
+spy:'Spying? You\'re giving stalker. Calm down. \u{1F480}',
+unbothered:'"I\'m fine." Meanwhile your imagination has produced six seasons and a movie. \u{1F605}',
+neverghost:'Never?? That\'s either character development or straight-up cap. \u{1F480}',
+lastweek:'Last WEEK?? And you\'re here taking quizzes instead of apologising? That\'s crazy work. \u{1F480}',
+currently:'You\'re actively ignoring someone while taking a Red Flag quiz... the jokes write themselves. \u{1F480}',
+ghosted:'Always the ghosted? Maybe it\'s not them. Maybe it\'s you. Just maybe. \u{1F480}',
+neverphone:'Trust is everything? That\'s the right answer. Weird that you\'re even here. \u{1F44D}',
+suspicious:'"Suspicious" according to who? Your overthinking? \u{1F480}',
+checkphone:'All the time?? Privacy packed its bags the day you entered the relationship. \u{1F480}',
+nopartner:'Probably for the best... nobody\'s phone is safe around you. \u{1F480}',
+glowup:'A glow-up post?? Be fr rn... who are you trying to convince? Them or yourself? \u{1F480}',
+removetrace:'Be fr rn... the relationship disappeared faster than your happiness. \u{1F480}',
+stalk:'Hours?? <span class="rname">[name]</span>, that\'s not a breakup... that\'s a full-time research project. \u{1F480}',
+vague:'"Some people don\'t deserve your energy." Babe... we all know who that\'s about. Just say you\'re hurting. \u{1F605}',
+askabout:'Asking them? Wait... healthy communication? Wrong app, bestie. \u{1F923}',
+deleteit:'Deleting it? One missing repost and suddenly the post is fighting for its life. \u{1F480}',
+hotterpic:'Posting a thirst trap to punish them? Bro\'s love language is psychological warfare. \u{1F605}',
+dontbother:'"It doesn\'t bother me." Sure... and I totally believe you. \u{1F480}',
+rightrp:'The "right person" doesn\'t exist <span class="rname">[name]</span>. You just have a type... and that type is toxic. \u{1F480}',
+picky:'Too picky? You mean too scared to settle. There\'s a difference. \u{1F480}',
+pushaway:'At least you\'re self-aware. That\'s growth... or just more evidence. \u{1F605}',
+idontknow:'You don\'t know why you\'re single? The answer is literally this quiz. \u{1F605}',
+secure:'Secure? If you were actually secure, you wouldn\'t be here. Cap detected. \u{1F914}',
+anxious:'Anxious? One dry text and you\'ve already planned the breakup. \u{1F480}',
+avoidant:'Avoidant? Your emotional availability is permanently set to "Do Not Disturb." \u{1F480}',
+dontknowstyle:'You don\'t know your attachment style in 2026?? You\'re rawdogging relationships with zero patch notes. \u{1F480}',
+greenflag:'A green flag rating yourself?? The delusion is actually inspiring. \u{1F923}',
+midflag:'Mid? At least you\'re self-aware. That\'s literally your only redeeming quality. \u{1F605}',
+knowwhatiam:'Congrats... you identified the problem. Shame it\'s still you. \u{1F480}',
+unhinged:'A perfect 10?? Bro came here to defend the title. \u{1F605}'
+};
+
+var scores={texting:0,dating:0,redflags:0,aware:0};
+var maxScores={texting:24,dating:24,redflags:24,aware:24};
+
+function calcScores(){
+scores={texting:0,dating:0,redflags:0,aware:0};
+if(ans[4]==='single') scores.redflags+=2;
+else if(ans[4]==='situationship') scores.redflags+=3;
+else if(ans[4]==='taken') scores.redflags+=1;
+else scores.redflags+=3;
+if(ans[7]==='instantly') scores.texting+=3;
+else if(ans[7]==='fewmin') scores.texting+=1;
+else if(ans[7]==='hours') scores.texting+=2;
+else scores.texting+=4;
+if(ans[10]==='doubletext') scores.texting+=4;
+else if(ans[10]==='thirsttrap') scores.redflags+=3;
+else if(ans[10]==='block') scores.redflags+=4;
+else scores.texting+=2;
+if(ans[13]==='textq') scores.texting+=3;
+else if(ans[13]==='call') scores.texting+=4;
+else if(ans[13]==='overthink') scores.redflags+=3;
+else scores.aware+=2;
+if(ans[16]==='ignore') scores.aware+=2;
+else if(ans[16]==='nmu') scores.dating+=4;
+else if(ans[16]==='hardtoget') scores.texting+=3;
+else scores.dating+=4;
+if(ans[19]==='paragraphs') scores.texting+=3;
+else if(ans[19]==='k') scores.texting+=4;
+else if(ans[19]==='voicenotes') scores.texting+=2;
+else scores.aware+=1;
+if(ans[23]==='never') scores.aware+=2;
+else if(ans[23]==='important') scores.aware+=2;
+else if(ans[23]==='allthetime') scores.texting+=3;
+else scores.texting+=4;
+if(ans[26]==='zero') scores.aware+=2;
+else if(ans[26]==='onetwo') scores.dating+=2;
+else if(ans[26]==='threetofive') scores.redflags+=3;
+else scores.redflags+=4;
+if(ans[30]==='toxic') scores.aware+=2;
+else if(ans[30]==='clingy') scores.dating+=3;
+else if(ans[30]==='cheated') scores.dating+=2;
+else scores.redflags+=3;
+if(ans[33]==='immediately') scores.redflags+=4;
+else if(ans[33]==='afterdate') scores.aware+=2;
+else if(ans[33]==='dontcheck') scores.aware+=3;
+else scores.redflags+=3;
+if(ans[36]==='attention') scores.dating+=4;
+else if(ans[36]==='fix') scores.redflags+=4;
+else if(ans[36]==='stable') scores.aware+=1;
+else scores.dating+=3;
+if(ans[39]==='months') scores.aware+=2;
+else if(ans[39]==='weeks') scores.redflags+=2;
+else if(ans[39]==='day1') scores.redflags+=4;
+else scores.aware+=1;
+if(ans[42]==='communicate') scores.aware+=3;
+else if(ans[42]==='passive') scores.redflags+=3;
+else if(ans[42]==='spy') scores.redflags+=4;
+else scores.redflags+=2;
+if(ans[45]==='neverghost') scores.aware+=3;
+else if(ans[45]==='lastweek') scores.redflags+=3;
+else if(ans[45]==='currently') scores.redflags+=4;
+else scores.redflags+=2;
+if(ans[48]==='neverphone') scores.aware+=3;
+else if(ans[48]==='suspicious') scores.redflags+=2;
+else if(ans[48]==='checkphone') scores.redflags+=4;
+else scores.aware+=1;
+if(ans[52]==='glowup') scores.dating+=3;
+else if(ans[52]==='removetrace') scores.dating+=2;
+else if(ans[52]==='stalk') scores.redflags+=4;
+else scores.redflags+=2;
+if(ans[55]==='askabout') scores.aware+=3;
+else if(ans[55]==='deleteit') scores.redflags+=3;
+else if(ans[55]==='hotterpic') scores.redflags+=4;
+else scores.aware+=2;
+if(ans[58]==='rightrp') scores.dating+=3;
+else if(ans[58]==='picky') scores.dating+=2;
+else if(ans[58]==='pushaway') scores.aware+=2;
+else scores.dating+=2;
+if(ans[61]==='secure') scores.aware+=3;
+else if(ans[61]==='anxious') scores.redflags+=3;
+else if(ans[61]==='avoidant') scores.redflags+=4;
+else scores.aware+=1;
+if(ans[64]==='greenflag') scores.aware+=3;
+else if(ans[64]==='midflag') scores.aware+=3;
+else if(ans[64]==='knowwhatiam') scores.aware+=2;
+else scores.redflags+=4;
+}
+
+function getLabel(t){
+if(t<=10) return 'Bro Actually Has Emotional Intelligence';
+if(t<=20) return 'Rare W. Don\'t Ruin It.';
+if(t<=30) return 'You\'re Kinda Toxic Ngl';
+if(t<=40) return 'Walking Red Flag';
+if(t<=50) return 'Heartbreaker';
+if(t<=60) return 'Godspeed To Your Future Partner';
+return 'Absolutely Unhinged';
+}
+
+function getLevel(t){
+if(t<=10) return 'Level 1';
+if(t<=20) return 'Level 2';
+if(t<=30) return 'Level 3';
+if(t<=40) return 'Level 4';
+if(t<=50) return 'Level 5';
+if(t<=60) return 'Level 6';
+return 'Level 7';
+}
+
+function getCatComment(c,v){
+var p=v/maxScores[c]*100;
+if(p>=66){
+if(c==='texting') return 'Your chat history needs therapy. \u{1F480}';
+if(c==='dating') return 'Your exes deserve compensation. \u{1F480}';
+if(c==='redflags') return 'You ARE the warning sign. \u{1F480}';
+return 'At least you\'re honest. \u{1F480}';
+}else if(p>=33){
+if(c==='texting') return 'Could be worse... somehow. \u{1F605}';
+if(c==='dating') return 'You\'ve got a few screws loose. \u{1F480}';
+if(c==='redflags') return 'Villain arc frr \u{1F480}';
+return 'Character development still pending. \u{1F480}';
+}else{
+if(c==='texting') return 'Rare texting W. \u{1F64F}';
+if(c==='dating') return 'Somebody marry this one. \u{1F489}';
+if(c==='redflags') return 'Almost disappointingly normal. \u{1F480}';
+return 'Delusion carries you frr \u{1F923}';
+}
+}
+
+function showResults(){
+calcScores();
+var total=scores.texting+scores.dating+scores.redflags+scores.aware;
+var label=getLabel(total);
+var level=getLevel(total);
+var el=function(id){return document.getElementById(id)};
+if(el('resScore')) el('resScore').textContent=total;
+if(el('resTitle')) el('resTitle').textContent=label;
+if(el('resLevel')) el('resLevel').textContent=level;
+var cats=['texting','dating','redflags','aware'];
+var ids=['Texting','Dating','Red','Aware'];
+for(var i=0;i<cats.length;i++){
+var p=Math.round(scores[cats[i]]/maxScores[cats[i]]*100);
+if(el('bar'+ids[i])) el('bar'+ids[i]).style.width=p+'%';
+if(el('pct'+ids[i])) el('pct'+ids[i]).textContent=p+'%';
+if(el('com'+ids[i])) el('com'+ids[i]).textContent=getCatComment(cats[i],scores[cats[i]]);
+}
+document.querySelectorAll('.s').forEach(function(s){s.classList.remove('act')});
+var rc=el('resultCard');
+if(rc) rc.style.display='flex';
+}
+
+/* ===== PAYWALL ===== */
+function showPaywall(){
+if(sessionStorage.getItem('rf_paid')){showResults();return}
+document.querySelectorAll('.s').forEach(function(s){s.classList.remove('act')});
+var pw=document.getElementById('s67');
+if(pw){
+pw.classList.add('act');
+pw.style.opacity='1';
+pw.style.pointerEvents='all';
+pw.style.transform='translateX(0)';
+}
+resetPaywall();
+}
+
+function resetPaywall(){
+var el=function(id){return document.getElementById(id)};
+if(el('pwBtnWrap')) el('pwBtnWrap').style.display='flex';
+if(el('pwVerifying')) el('pwVerifying').style.display='none';
+if(el('verifiedBadge')) el('verifiedBadge').style.display='none';
+}
+
+function openCheckout(){
+window.open('https://bohlalemoyahabohendr.gumroad.com/l/ltsfzh','_blank');
+var el=function(id){return document.getElementById(id)};
+if(el('pwBtnWrap')) el('pwBtnWrap').style.display='none';
+if(el('pwVerifying')) el('pwVerifying').style.display='flex';
+// TODO: Connect Supabase + Gumroad verification here
+// When the backend confirms the purchase, it will call onVerificationSuccess().
+// Temporary simulation while the backend is not yet implemented:
+setTimeout(function(){onVerificationSuccess()},2500);
+}
+
+function onVerificationSuccess(){
+// TODO: Connect Supabase + Gumroad verification here
+// This placeholder will be called by the backend once the payment is verified.
+sessionStorage.setItem('rf_paid','1');
+var el=function(id){return document.getElementById(id)};
+if(el('pwVerifying')) el('pwVerifying').style.display='none';
+if(el('verifiedBadge')) el('verifiedBadge').style.display='block';
+setTimeout(function(){
+document.getElementById('s67').classList.remove('act');
+showResults();
+},1500);
+}
+
+/* ===== TYPEWRITER ===== */
+function tw(id,raw){
+clearTimeout(twT);
+twE=document.getElementById(id);
+if(!twE||!raw){twA=false;return}
+twF=raw.replace(/\[name\]/g,nm||'friend');
+twE.innerHTML='';
+twA=true;
+var i=0;
+function loop(){
+if(!twA)return;
+if(i<twF.length){
+if(twF[i]==='<'){var c=twF.indexOf('>',i);twE.innerHTML+=twF.substring(i,c+1);i=c+1}
+else{twE.innerHTML+=twF[i];i++}
+twT=setTimeout(loop,25);
+}else{twA=false}
+}
+loop();
+}
+
+function roastTap(nid){
+if(twA){clearTimeout(twT);if(twE)twE.innerHTML=twF;twA=false}
+else{go(nid)}
+}
+
+/* ===== NAVIGATION ===== */
+function go(id){
+if(id===67){showPaywall();return}
+document.querySelectorAll('.s').forEach(function(s){s.classList.remove('act')});
+var t=document.getElementById('s'+id);
+if(t){t.classList.add('act');st=id}
+v(10);
+if(id===2){setTimeout(function(){tw('roast1',R.name);go(3)},2500)}
+if(id===5){var r=R[ans[4]]||'';setTimeout(function(){tw('roast2',r);go(6)},2500)}
+if(id===8){var r=R[ans[7]]||'';setTimeout(function(){tw('roast3',r);go(9)},2500)}
+if(id===11){var r=R[ans[10]]||'';setTimeout(function(){tw('roast4',r);go(12)},2500)}
+if(id===14){var r=R[ans[13]]||'';setTimeout(function(){tw('roast5',r);go(15)},2500)}
+if(id===17){var r=R[ans[16]]||'';setTimeout(function(){tw('roast6',r);go(18)},2500)}
+if(id===20){var r=R[ans[19]]||'';setTimeout(function(){tw('roast7',r);go(21)},2500)}
+if(id===24){var r=R[ans[23]]||'';setTimeout(function(){tw('roast8',r);go(25)},2500)}
+if(id===27){var r=R[ans[26]]||'';setTimeout(function(){tw('roast9',r);go(28)},2500)}
+if(id===31){var r=R[ans[30]]||'';setTimeout(function(){tw('roast10',r);go(32)},2500)}
+if(id===34){var r=R[ans[33]]||'';setTimeout(function(){tw('roast11',r);go(35)},2500)}
+if(id===37){var r=R[ans[36]]||'';setTimeout(function(){tw('roast12',r);go(38)},2500)}
+if(id===40){var r=R[ans[39]]||'';setTimeout(function(){tw('roast13',r);go(41)},2500)}
+if(id===43){var r=R[ans[42]]||'';setTimeout(function(){tw('roast14',r);go(44)},2500)}
+if(id===46){var r=R[ans[45]]||'';setTimeout(function(){tw('roast15',r);go(47)},2500)}
+if(id===49){var r=R[ans[48]]||'';setTimeout(function(){tw('roast16',r);go(50)},2500)}
+if(id===53){var r=R[ans[52]]||'';setTimeout(function(){tw('roast17',r);go(54)},2500)}
+if(id===56){var r=R[ans[55]]||'';setTimeout(function(){tw('roast18',r);go(57)},2500)}
+if(id===59){var r=R[ans[58]]||'';setTimeout(function(){tw('roast19',r);go(60)},2500)}
+if(id===62){var r=R[ans[61]]||'';setTimeout(function(){tw('roast20',r);go(63)},2500)}
+if(id===65){var r=R[ans[64]]||'';setTimeout(function(){tw('roast21',r);go(66)},2500)}
+}
+
+/* ===== EVENT HANDLERS ===== */
+document.getElementById('s3').onclick=function(){roastTap(4)};
+document.getElementById('s6').onclick=function(){roastTap(7)};
+document.getElementById('s9').onclick=function(){roastTap(10)};
+document.getElementById('s12').onclick=function(){roastTap(13)};
+document.getElementById('s15').onclick=function(){roastTap(16)};
+document.getElementById('s18').onclick=function(){roastTap(19)};
+document.getElementById('s21').onclick=function(){roastTap(22)};
+document.getElementById('s22').onclick=function(){roastTap(23)};
+document.getElementById('s25').onclick=function(){roastTap(26)};
+document.getElementById('s28').onclick=function(){roastTap(29)};
+document.getElementById('s29').onclick=function(){roastTap(30)};
+document.getElementById('s32').onclick=function(){roastTap(33)};
+document.getElementById('s35').onclick=function(){roastTap(36)};
+document.getElementById('s38').onclick=function(){roastTap(39)};
+document.getElementById('s41').onclick=function(){roastTap(42)};
+document.getElementById('s44').onclick=function(){roastTap(45)};
+document.getElementById('s47').onclick=function(){roastTap(48)};
+document.getElementById('s50').onclick=function(){roastTap(51)};
+document.getElementById('s51').onclick=function(){roastTap(52)};
+document.getElementById('s54').onclick=function(){roastTap(55)};
+document.getElementById('s57').onclick=function(){roastTap(58)};
+document.getElementById('s60').onclick=function(){roastTap(61)};
+document.getElementById('s63').onclick=function(){roastTap(64)};
+document.getElementById('s66').onclick=function(){roastTap(67)};
+
+document.getElementById('startBtn').addEventListener('click',function(){
+var o=document.getElementById('ov');
+o.classList.remove('fd');o.classList.add('open');v(20);
+setTimeout(function(){go(1)},600);
+setTimeout(function(){o.classList.add('fd')},700);
+setTimeout(function(){o.classList.remove('open','fd');o.style.clipPath='circle(0% at 50% 50%)'},1200);
+});
+
+document.getElementById('nameIn').addEventListener('input',function(){
+var b=document.getElementById('nameBtn');
+this.value.trim().length>0?b.classList.remove('off'):b.classList.add('off');
+});
+document.getElementById('nameBtn').addEventListener('click',function(){
+nm=document.getElementById('nameIn').value.trim();
+go(2);
+});
+
+document.querySelectorAll('.opt').forEach(function(o){
+o.addEventListener('click',function(){
+var p=this.closest('.opts');
+p.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});
+this.classList.add('sel');
+var sid=parseInt(this.closest('.s').id.replace('s',''));
+ans[sid]=this.getAttribute('data-v');
+var b=document.getElementById('btn'+sid);
+if(b)b.classList.remove('off');
+v(10);
+});
+});
+
+document.getElementById('btn4').onclick=function(){go(5)};
+document.getElementById('btn7').onclick=function(){go(8)};
+document.getElementById('btn10').onclick=function(){go(11)};
+document.getElementById('btn13').onclick=function(){go(14)};
+document.getElementById('btn16').onclick=function(){go(17)};
+document.getElementById('btn19').onclick=function(){go(20)};
+document.getElementById('btn23').onclick=function(){go(24)};
+document.getElementById('btn26').onclick=function(){go(27)};
+document.getElementById('btn30').onclick=function(){go(31)};
+document.getElementById('btn33').onclick=function(){go(34)};
+document.getElementById('btn36').onclick=function(){go(37)};
+document.getElementById('btn39').onclick=function(){go(40)};
+document.getElementById('btn42').onclick=function(){go(43)};
+document.getElementById('btn45').onclick=function(){go(46)};
+document.getElementById('btn48').onclick=function(){go(49)};
+document.getElementById('btn52').onclick=function(){go(53)};
+document.getElementById('btn55').onclick=function(){go(56)};
+document.getElementById('btn58').onclick=function(){go(59)};
+document.getElementById('btn61').onclick=function(){go(62)};
+document.getElementById('btn64').onclick=function(){go(65)};
+
+/* Paywall buttons */
+var ub=document.getElementById('unlockBtn');
+if(ub) ub.addEventListener('click',function(){openCheckout()});
+
+/* Download */
+document.getElementById('dlBtn').addEventListener('click',function(){
+var card=document.getElementById('captureArea');
+if(typeof html2canvas!=='undefined'){
+html2canvas(card,{scale:2,useCORS:true,allowTaint:true,backgroundColor:null}).then(function(cvs){
+var link=document.createElement('a');
+link.download='RedFlag-Results.png';
+link.href=cvs.toDataURL('image/png');
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+}).catch(function(e){
+alert('Download failed. Try taking a screenshot instead! \u{1F4F1}');
+});
+}else{
+alert('Download not available. Take a screenshot instead! \u{1F4F1}');
+}
+});
+
+function v(ms){if(navigator.vibrate)navigator.vibrate(ms)}
+window.addEventListener('DOMContentLoaded',function(){go(0)});
+</script>
+</body>
+</html>
+
+    <script src="/script.js"></script>
+  </body>
+
+</html>
