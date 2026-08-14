@@ -1068,7 +1068,32 @@ if(rc) rc.style.display='flex';
 
 /* ===== PAYWALL ===== */
 function showPaywall(){
-if(sessionStorage.getItem('rf_paid')){showResults();return}
+// Auto-unlock users coming back from Gumroad payment
+const urlParams = new URLSearchParams(window.location.search);
+const realPaymentId = urlParams.get('payment_id');
+if (realPaymentId) {
+  // If they have a payment ID in the URL, immediately check the backend
+  setTimeout(() => {
+    // We wait 1 second so the quiz UI has time to load
+    if(document.getElementById('s67').classList.contains('act')){
+      // Force the verify-payment check with their real ID
+      const autoCheck = setInterval(async () => {
+        try {
+          const res = await fetch('/.netlify/functions/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ payment_id: realPaymentId })
+          });
+          const data = await res.json();
+          if (data.verified) {
+            clearInterval(autoCheck);
+            onVerificationSuccess();
+          }
+        } catch(e) { console.log("Waiting for payment..."); }
+      }, 3000);
+    }
+  }, 1000);
+}
 document.querySelectorAll('.s').forEach(function(s){s.classList.remove('act')});
 var pw=document.getElementById('s67');
 if(pw){
