@@ -1148,7 +1148,6 @@ if(el('pwVerifying')) el('pwVerifying').style.display='flex';
 function onVerificationSuccess(){
 // TODO: Connect Supabase + Gumroad verification here
 // This placeholder will be called by the backend once the payment is verified.
-sessionStorage.setItem('rf_paid','1');
 var el=function(id){return document.getElementById(id)};
 if(el('pwVerifying')) el('pwVerifying').style.display='none';
 if(el('verifiedBadge')) el('verifiedBadge').style.display='block';
