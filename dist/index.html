@@ -1094,7 +1094,29 @@ if(el('pwBtnWrap')) el('pwBtnWrap').style.display='none';
 if(el('pwVerifying')) el('pwVerifying').style.display='flex';
 // TODO: Connect Supabase + Gumroad verification here
 // When the backend confirms the purchase, it will call onVerificationSuccess().
-// Temporary simulation while the backend is not yet implemented:
+      // Start polling the backend every 5 seconds to check for payment
+      let attempts = 0;
+      const maxAttempts = 30;
+      const verifyInterval = setInterval(async () => {
+        attempts++;
+        try {
+          const res = await fetch('/.netlify/functions/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ payment_id: "test_123" }) // We'll swap this for real ID later
+          });
+          const data = await res.json();
+          if (data.verified) {
+            clearInterval(verifyInterval);
+            onVerificationSuccess(); // This unlocks the results!
+          }
+        } catch (error) {
+          console.log("Waiting for payment...");
+        }
+        if (attempts >= maxAttempts) {
+          clearInterval(verifyInterval);
+        }
+      }, 5000); // 5000 milliseconds = 5 seconds
 
 }
 
