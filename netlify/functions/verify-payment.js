@@ -74,17 +74,27 @@ function getLevel(score) {
   return 'Level 7';
 }
 
-function scoreAnswers(answers) {
+function sanitizeAnswers(answers) {
   if (!answers || typeof answers !== 'object' || Array.isArray(answers)) {
     throw new Error('Quiz answers are missing.');
   }
 
-  const pointsByQuestion = {};
+  const sanitized = {};
   for (const [questionId, allowedAnswers] of Object.entries(RISK_BY_QUESTION)) {
     const answer = answers[questionId];
     if (!Object.prototype.hasOwnProperty.call(allowedAnswers, answer)) {
       throw new Error('Quiz answers are incomplete or invalid.');
     }
+    sanitized[questionId] = answer;
+  }
+  return sanitized;
+}
+
+function scoreAnswers(answers) {
+  const sanitized = sanitizeAnswers(answers);
+  const pointsByQuestion = {};
+  for (const [questionId, allowedAnswers] of Object.entries(RISK_BY_QUESTION)) {
+    const answer = sanitized[questionId];
     pointsByQuestion[questionId] = allowedAnswers[answer];
   }
 
@@ -203,3 +213,4 @@ exports.handler = async (event) => {
 };
 
 exports.scoreAnswers = scoreAnswers;
+exports.sanitizeAnswers = sanitizeAnswers;

@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const { createClient } = require('@supabase/supabase-js');
 
+const GUMROAD_VERIFY_URL = 'https://api.gumroad.com/v2/licenses/verify';
+
 const jsonResponse = (statusCode, body) => ({
   statusCode,
   headers: {
@@ -29,6 +31,35 @@ function parsePayload(event) {
 
 function isTrue(value) {
   return value === true || value === 'true' || value === '1' || value === 1;
+}
+
+async function verifyPaidLicense(productId, licenseKey, saleId, email) {
+  if (typeof licenseKey !== 'string' || licenseKey.trim().length < 8) return false;
+
+  const form = new URLSearchParams({
+    product_id: productId,
+    license_key: licenseKey.trim(),
+    increment_uses_count: 'false'
+  });
+  const response = await fetch(GUMROAD_VERIFY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: form.toString()
+  });
+  const gumroad = await response.json().catch(() => ({}));
+  const purchase = gumroad.purchase || {};
+  const verifiedEmail =
+    typeof purchase.email === 'string' ? purchase.email.trim().toLowerCase() : '';
+
+  return Boolean(
+    response.ok &&
+    gumroad.success === true &&
+    !isTrue(purchase.refunded) &&
+    !isTrue(purchase.chargebacked) &&
+    !isTrue(purchase.disputed) &&
+    (!purchase.sale_id || purchase.sale_id === saleId) &&
+    (!verifiedEmail || verifiedEmail === email)
+  );
 }
 
 exports.handler = async (event) => {
@@ -71,6 +102,16 @@ exports.handler = async (event) => {
   else if (isTrue(payload.disputed)) status = 'disputed';
 
   try {
+    if (
+      status === 'paid' &&
+      !(await verifyPaidLicense(productId, payload.license_key, saleId, email))
+    ) {
+      return jsonResponse(402, {
+        success: false,
+        error: 'The paid license could not be verified with Gumroad.'
+      });
+    }
+
     const supabase = createClient(supabaseUrl, supabaseKey);
     const { error } = await supabase.from('purchases').upsert(
       {

@@ -801,6 +801,71 @@
             color: var(--rf-pink);
         }
 
+        .pw .unlock-btn:disabled {
+            cursor: wait;
+            opacity: 0.66;
+        }
+
+        .pw-checkout {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .pw-checkout-label {
+            display: block;
+            margin: 16px 0 8px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .pw-checkout-email {
+            width: 100%;
+            height: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 0 15px;
+            font: 600 14px 'Inter', sans-serif;
+            outline: none;
+        }
+
+        .pw-checkout-email::placeholder {
+            color: rgba(255, 255, 255, 0.28);
+        }
+
+        .pw-checkout-email:focus {
+            border-color: rgba(255, 255, 255, 0.48);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+        }
+
+        .pw-checkout-status {
+            min-height: 18px;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .pw-checkout-status.error {
+            color: #ff9db0;
+        }
+
+        .pw-checkout-status.success {
+            color: #8ef0b0;
+        }
+
+        .pw-checkout-fallback {
+            display: inline-block;
+            margin-top: 8px;
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+            text-decoration: underline;
+        }
+
         .pw-footnote {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.15);
@@ -809,12 +874,24 @@
             max-width: 280px;
         }
 
-        .pw-license {
+        .pw-license-recovery {
             width: 100%;
             max-width: 340px;
             margin-top: 22px;
             padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pw-license-recovery summary {
+            color: rgba(255, 255, 255, 0.52);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pw-license {
+            width: 100%;
+            margin-top: 14px;
         }
 
         .pw-license-label {
@@ -2109,20 +2186,29 @@
                 <div class="pw-price"><span class="currency">$</span>4.99</div>
             </div>
 
-            <a class="unlock-btn" id="unlockBtn" href="https://benconk.gumroad.com/l/cdmlkx" target="_blank" rel="noopener noreferrer" aria-label="Continue to secure Gumroad checkout to reveal results">
-                Reveal My Results — <span class="price-highlight">$4.99</span>
-            </a>
-
-            <div class="pw-footnote">Secure checkout via Gumroad. Keep this tab open while you pay.</div>
-
-            <form class="pw-license" id="licenseForm">
-                <label class="pw-license-label" for="licenseKey">Already purchased? Paste the license key from your Gumroad receipt.</label>
-                <div class="pw-license-row">
-                    <input class="pw-license-input" id="licenseKey" name="license_key" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="200" placeholder="XXXX-XXXX-XXXX-XXXX" />
-                    <button class="pw-license-button" id="licenseButton" type="submit">Unlock</button>
-                </div>
-                <div class="pw-license-status" id="licenseStatus" role="status" aria-live="polite"></div>
+            <form class="pw-checkout" id="checkoutForm">
+                <label class="pw-checkout-label" for="checkoutEmail">Enter the email you'll use at Gumroad so this tab can unlock automatically.</label>
+                <input class="pw-checkout-email" id="checkoutEmail" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required />
+                <button class="unlock-btn" id="unlockBtn" type="submit" aria-label="Continue to secure Gumroad checkout to reveal results">
+                    Reveal My Results — <span class="price-highlight">$4.99</span>
+                </button>
+                <div class="pw-checkout-status" id="checkoutStatus" role="status" aria-live="polite"></div>
+                <a class="pw-checkout-fallback" id="checkoutFallback" href="https://benconk.gumroad.com/l/cdmlkx" target="_blank" rel="noopener noreferrer" hidden>Open secure checkout</a>
             </form>
+
+            <div class="pw-footnote">Secure checkout via Gumroad. Keep this tab open—it unlocks after payment.</div>
+
+            <details class="pw-license-recovery">
+                <summary>Already paid but not unlocked?</summary>
+                <form class="pw-license" id="licenseForm">
+                    <label class="pw-license-label" for="licenseKey">Paste the license key from your Gumroad receipt.</label>
+                    <div class="pw-license-row">
+                        <input class="pw-license-input" id="licenseKey" name="license_key" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="200" placeholder="XXXX-XXXX-XXXX-XXXX" />
+                        <button class="pw-license-button" id="licenseButton" type="submit">Unlock</button>
+                    </div>
+                    <div class="pw-license-status" id="licenseStatus" role="status" aria-live="polite"></div>
+                </form>
+            </details>
         </div>
     </div>
 
@@ -2192,6 +2278,8 @@
             twA = false,
             twE = null,
             twF = '';
+        var checkoutPollTimer = null,
+            checkoutPollActive = false;
 
         var R = {
             name: 'Alright <span class="rname">[name]</span>, let\'s see how toxic you really are. Don\'t lie, I\'ll know. <span class="emoji-big">💀</span>',
@@ -2298,6 +2386,7 @@
 
         function showResults(result) {
             if (!result || !result.categories) return;
+            stopCheckoutPolling();
             document.getElementById('resScore').textContent = result.score;
             document.getElementById('resTitle').textContent = result.label;
             document.getElementById('resLevel').textContent = result.level;
@@ -2317,7 +2406,11 @@
             document.querySelectorAll('.s').forEach(function(s) { s.classList.remove('act'); });
             var rc = document.getElementById('resultCard');
             if (rc) rc.style.display = 'flex';
-            try { sessionStorage.removeItem('redflagQuizState'); } catch (error) {}
+            try {
+                sessionStorage.removeItem('redflagQuizState');
+                sessionStorage.removeItem('redflagCheckoutSession');
+                sessionStorage.removeItem('redflagCheckoutEmail');
+            } catch (error) {}
         }
 
         function persistQuizState(returningFromCheckout) {
@@ -2341,6 +2434,125 @@
                 return saved;
             } catch (error) {
                 return null;
+            }
+        }
+
+        function setCheckoutStatus(message, type) {
+            var status = document.getElementById('checkoutStatus');
+            status.className = 'pw-checkout-status';
+            if (type) status.classList.add(type);
+            status.textContent = message;
+        }
+
+        function stopCheckoutPolling() {
+            checkoutPollActive = false;
+            if (checkoutPollTimer) clearTimeout(checkoutPollTimer);
+            checkoutPollTimer = null;
+        }
+
+        function setCheckoutWaiting(waiting) {
+            var button = document.getElementById('unlockBtn');
+            var email = document.getElementById('checkoutEmail');
+            button.disabled = waiting;
+            email.disabled = waiting;
+            button.innerHTML = waiting
+                ? 'Waiting for payment…'
+                : 'Reveal My Results — <span class="price-highlight">$4.99</span>';
+        }
+
+        function pollCheckoutStatus(sessionToken) {
+            stopCheckoutPolling();
+            checkoutPollActive = true;
+            setCheckoutWaiting(true);
+            setCheckoutStatus('Checkout opened. Pay with the same email and this tab will unlock automatically.');
+
+            async function check() {
+                if (!checkoutPollActive) return;
+                try {
+                    var response = await fetch('/api/checkout-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ session_token: sessionToken })
+                    });
+                    var data = await response.json().catch(function() { return {}; });
+
+                    if (response.ok && data.paid === true && data.result) {
+                        setCheckoutStatus('Payment verified. Loading your result…', 'success');
+                        stopCheckoutPolling();
+                        setTimeout(function() { showResults(data.result); }, 350);
+                        return;
+                    }
+
+                    if (response.status === 401 || response.status === 402) {
+                        stopCheckoutPolling();
+                        setCheckoutWaiting(false);
+                        try { sessionStorage.removeItem('redflagCheckoutSession'); } catch (error) {}
+                        setCheckoutStatus(data.error || 'This checkout session can no longer unlock.', 'error');
+                        return;
+                    }
+
+                    if (!response.ok && response.status < 500) {
+                        throw new Error(data.error || 'Payment status could not be checked.');
+                    }
+
+                    setCheckoutStatus('Waiting for Gumroad to confirm payment… Keep this tab open.');
+                } catch (error) {
+                    setCheckoutStatus('Still waiting for payment confirmation…');
+                }
+
+                if (checkoutPollActive) checkoutPollTimer = setTimeout(check, 2500);
+            }
+
+            check();
+        }
+
+        async function startCheckout(event) {
+            event.preventDefault();
+            var emailInput = document.getElementById('checkoutEmail');
+            var email = emailInput.value.trim().toLowerCase();
+            var fallback = document.getElementById('checkoutFallback');
+
+            fallback.hidden = true;
+            if (!emailInput.checkValidity()) {
+                emailInput.reportValidity();
+                setCheckoutStatus('Enter the email you will use at Gumroad.', 'error');
+                return;
+            }
+
+            // Open immediately so browsers do not block the tab while the server prepares checkout.
+            var checkoutWindow = window.open('about:blank', '_blank');
+            if (checkoutWindow) checkoutWindow.opener = null;
+            setCheckoutWaiting(true);
+            setCheckoutStatus('Preparing secure checkout…');
+            persistQuizState(true);
+
+            try {
+                var response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, answers: ans })
+                });
+                var data = await response.json().catch(function() { return {}; });
+                if (!response.ok || data.success !== true || !data.session_token || !data.checkout_url) {
+                    throw new Error(data.error || 'Checkout could not be started.');
+                }
+
+                try {
+                    sessionStorage.setItem('redflagCheckoutSession', data.session_token);
+                    sessionStorage.setItem('redflagCheckoutEmail', email);
+                } catch (error) {}
+
+                fallback.href = data.checkout_url;
+                if (checkoutWindow) {
+                    checkoutWindow.location.replace(data.checkout_url);
+                } else {
+                    fallback.hidden = false;
+                }
+                pollCheckoutStatus(data.session_token);
+            } catch (error) {
+                if (checkoutWindow) checkoutWindow.close();
+                setCheckoutWaiting(false);
+                setCheckoutStatus(error.message || 'Checkout could not be started.', 'error');
             }
         }
 
@@ -2544,10 +2756,7 @@
         document.getElementById('s63').onclick = function() { roastTap(64); };
         document.getElementById('s66').onclick = function() { roastTap(67); };
 
-        document.getElementById('unlockBtn').addEventListener('click', function() {
-            persistQuizState(true);
-        });
-
+        document.getElementById('checkoutForm').addEventListener('submit', startCheckout);
         document.getElementById('licenseForm').addEventListener('submit', verifyPurchase);
 
         document.getElementById('startBtn').addEventListener('click', function() {
@@ -2632,8 +2841,17 @@
 
         window.addEventListener('DOMContentLoaded', function() {
             var saved = restoreQuizState();
-            if (saved && (saved.returningFromCheckout || Number(saved.screen) === 67)) {
+            var sessionToken = null;
+            var checkoutEmail = '';
+            try {
+                sessionToken = sessionStorage.getItem('redflagCheckoutSession');
+                checkoutEmail = sessionStorage.getItem('redflagCheckoutEmail') || '';
+            } catch (error) {}
+
+            if (saved && (saved.returningFromCheckout || Number(saved.screen) === 67 || sessionToken)) {
                 showPaywall();
+                if (checkoutEmail) document.getElementById('checkoutEmail').value = checkoutEmail;
+                if (sessionToken) pollCheckoutStatus(sessionToken);
             } else {
                 go(0);
             }
