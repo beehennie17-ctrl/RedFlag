@@ -1,1 +1,11 @@
-{"name":"redflag-backend","version":"1.0.0","private":true,"dependencies":{"@supabase/supabase-js":"^2.57.4"}}
+{
+  "name": "redflag-backend",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4"
+  }
+}
