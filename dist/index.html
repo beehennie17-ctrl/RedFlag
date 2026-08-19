@@ -801,6 +801,71 @@
             color: var(--rf-pink);
         }
 
+        .pw .unlock-btn:disabled {
+            cursor: wait;
+            opacity: 0.66;
+        }
+
+        .pw-checkout {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .pw-checkout-label {
+            display: block;
+            margin: 16px 0 8px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .pw-checkout-email {
+            width: 100%;
+            height: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 0 15px;
+            font: 600 14px 'Inter', sans-serif;
+            outline: none;
+        }
+
+        .pw-checkout-email::placeholder {
+            color: rgba(255, 255, 255, 0.28);
+        }
+
+        .pw-checkout-email:focus {
+            border-color: rgba(255, 255, 255, 0.48);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+        }
+
+        .pw-checkout-status {
+            min-height: 18px;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.58);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .pw-checkout-status.error {
+            color: #ff9db0;
+        }
+
+        .pw-checkout-status.success {
+            color: #8ef0b0;
+        }
+
+        .pw-checkout-fallback {
+            display: inline-block;
+            margin-top: 8px;
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+            text-decoration: underline;
+        }
+
         .pw-footnote {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.15);
@@ -809,63 +874,93 @@
             max-width: 280px;
         }
 
-        /* Verifying state (hidden for now) */
-        #pwVerifying {
-            display: none;
-            text-align: center;
-            margin-top: 12px;
+        .pw-license-recovery {
             width: 100%;
             max-width: 340px;
-        }
-        #pwVerifying .vdots {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-        #pwVerifying .vdots span {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: white;
-            animation: dotPulse 1.4s infinite ease-in-out;
-        }
-        #pwVerifying .vdots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        #pwVerifying .vdots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        @keyframes dotPulse {
-            0%,
-            100% {
-                transform: scale(0.5);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        #pwVerifying h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 4px;
-        }
-        #pwVerifying p {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.3);
-            max-width: 280px;
-            margin: 0 auto;
-            line-height: 1.5;
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        #verifiedBadge {
-            display: none;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 16px;
+        .pw-license-recovery summary {
+            color: rgba(255, 255, 255, 0.52);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .pw-license {
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .pw-license-label {
+            display: block;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .pw-license-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .pw-license-input {
+            min-width: 0;
+            flex: 1;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 0 14px;
+            font: 600 14px 'Inter', sans-serif;
+            outline: none;
+        }
+
+        .pw-license-input::placeholder {
+            color: rgba(255, 255, 255, 0.28);
+        }
+
+        .pw-license-input:focus {
+            border-color: rgba(255, 255, 255, 0.48);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+        }
+
+        .pw-license-button {
+            height: 48px;
+            border: 0;
+            border-radius: 14px;
+            padding: 0 16px;
+            background: linear-gradient(135deg, var(--rf-pink), var(--rf-purple));
+            color: white;
+            font: 800 13px 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .pw-license-button:disabled {
+            cursor: wait;
+            opacity: 0.58;
+        }
+
+        .pw-license-status {
+            min-height: 18px;
+            margin-top: 9px;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .pw-license-status.error {
+            color: #ff9db0;
+        }
+
+        .pw-license-status.success {
+            color: #8ef0b0;
         }
 
         /* ===== RESULT CARD ===== */
@@ -2091,11 +2186,29 @@
                 <div class="pw-price"><span class="currency">$</span>4.99</div>
             </div>
 
-            <a class="unlock-btn" id="unlockBtn" href="https://benconk.gumroad.com/l/cdmlkx" rel="noopener noreferrer" aria-label="Continue to secure Gumroad checkout to reveal results">
-                Reveal My Results — <span class="price-highlight">$4.99</span>
-            </a>
+            <form class="pw-checkout" id="checkoutForm">
+                <label class="pw-checkout-label" for="checkoutEmail">Enter the email you'll use at Gumroad so this tab can unlock automatically.</label>
+                <input class="pw-checkout-email" id="checkoutEmail" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required />
+                <button class="unlock-btn" id="unlockBtn" type="submit" aria-label="Continue to secure Gumroad checkout to reveal results">
+                    Reveal My Results — <span class="price-highlight">$4.99</span>
+                </button>
+                <div class="pw-checkout-status" id="checkoutStatus" role="status" aria-live="polite"></div>
+                <a class="pw-checkout-fallback" id="checkoutFallback" href="https://benconk.gumroad.com/l/cdmlkx" target="_blank" rel="noopener noreferrer" hidden>Open secure checkout</a>
+            </form>
 
-            <div class="pw-footnote">Secure checkout via Gumroad.</div>
+            <div class="pw-footnote">Secure checkout via Gumroad. Keep this tab open—it unlocks after payment.</div>
+
+            <details class="pw-license-recovery">
+                <summary>Already paid but not unlocked?</summary>
+                <form class="pw-license" id="licenseForm">
+                    <label class="pw-license-label" for="licenseKey">Paste the license key from your Gumroad receipt.</label>
+                    <div class="pw-license-row">
+                        <input class="pw-license-input" id="licenseKey" name="license_key" type="text" inputmode="text" autocomplete="off" spellcheck="false" maxlength="200" placeholder="XXXX-XXXX-XXXX-XXXX" />
+                        <button class="pw-license-button" id="licenseButton" type="submit">Unlock</button>
+                    </div>
+                    <div class="pw-license-status" id="licenseStatus" role="status" aria-live="polite"></div>
+                </form>
+            </details>
         </div>
     </div>
 
@@ -2165,6 +2278,8 @@
             twA = false,
             twE = null,
             twF = '';
+        var checkoutPollTimer = null,
+            checkoutPollActive = false;
 
         var R = {
             name: 'Alright <span class="rname">[name]</span>, let\'s see how toxic you really are. Don\'t lie, I\'ll know. <span class="emoji-big">💀</span>',
@@ -2250,115 +2365,7 @@
             unhinged: 'A perfect 10?? Bro came here to defend the title. <span class="emoji-big">😅</span>'
         };
 
-        var scores = { texting: 0, dating: 0, redflags: 0, aware: 0 };
-        var maxScores = { texting: 24, dating: 24, redflags: 24, aware: 24 };
-
-        function calcScores() {
-            scores = { texting: 0, dating: 0, redflags: 0, aware: 0 };
-            if (ans[4] === 'single') scores.redflags += 2;
-            else if (ans[4] === 'situationship') scores.redflags += 3;
-            else if (ans[4] === 'taken') scores.redflags += 1;
-            else scores.redflags += 3;
-            if (ans[7] === 'instantly') scores.texting += 3;
-            else if (ans[7] === 'fewmin') scores.texting += 1;
-            else if (ans[7] === 'hours') scores.texting += 2;
-            else scores.texting += 4;
-            if (ans[10] === 'doubletext') scores.texting += 4;
-            else if (ans[10] === 'thirsttrap') scores.redflags += 3;
-            else if (ans[10] === 'block') scores.redflags += 4;
-            else scores.texting += 2;
-            if (ans[13] === 'textq') scores.texting += 3;
-            else if (ans[13] === 'call') scores.texting += 4;
-            else if (ans[13] === 'overthink') scores.redflags += 3;
-            else scores.aware += 2;
-            if (ans[16] === 'ignore') scores.aware += 2;
-            else if (ans[16] === 'nmu') scores.dating += 4;
-            else if (ans[16] === 'hardtoget') scores.texting += 3;
-            else scores.dating += 4;
-            if (ans[19] === 'paragraphs') scores.texting += 3;
-            else if (ans[19] === 'k') scores.texting += 4;
-            else if (ans[19] === 'voicenotes') scores.texting += 2;
-            else scores.aware += 1;
-            if (ans[23] === 'never') scores.aware += 2;
-            else if (ans[23] === 'important') scores.aware += 2;
-            else if (ans[23] === 'allthetime') scores.texting += 3;
-            else scores.texting += 4;
-            if (ans[26] === 'zero') scores.aware += 2;
-            else if (ans[26] === 'onetwo') scores.dating += 2;
-            else if (ans[26] === 'threetofive') scores.redflags += 3;
-            else scores.redflags += 4;
-            if (ans[30] === 'toxic') scores.aware += 2;
-            else if (ans[30] === 'clingy') scores.dating += 3;
-            else if (ans[30] === 'cheated') scores.dating += 2;
-            else scores.redflags += 3;
-            if (ans[33] === 'immediately') scores.redflags += 4;
-            else if (ans[33] === 'afterdate') scores.aware += 2;
-            else if (ans[33] === 'dontcheck') scores.aware += 3;
-            else scores.redflags += 3;
-            if (ans[36] === 'attention') scores.dating += 4;
-            else if (ans[36] === 'fix') scores.redflags += 4;
-            else if (ans[36] === 'stable') scores.aware += 1;
-            else scores.dating += 3;
-            if (ans[39] === 'months') scores.aware += 2;
-            else if (ans[39] === 'weeks') scores.redflags += 2;
-            else if (ans[39] === 'day1') scores.redflags += 4;
-            else scores.aware += 1;
-            if (ans[42] === 'communicate') scores.aware += 3;
-            else if (ans[42] === 'passive') scores.redflags += 3;
-            else if (ans[42] === 'spy') scores.redflags += 4;
-            else scores.redflags += 2;
-            if (ans[45] === 'neverghost') scores.aware += 3;
-            else if (ans[45] === 'lastweek') scores.redflags += 3;
-            else if (ans[45] === 'currently') scores.redflags += 4;
-            else scores.redflags += 2;
-            if (ans[48] === 'neverphone') scores.aware += 3;
-            else if (ans[48] === 'suspicious') scores.redflags += 2;
-            else if (ans[48] === 'checkphone') scores.redflags += 4;
-            else scores.aware += 1;
-            if (ans[52] === 'glowup') scores.dating += 3;
-            else if (ans[52] === 'removetrace') scores.dating += 2;
-            else if (ans[52] === 'stalk') scores.redflags += 4;
-            else scores.redflags += 2;
-            if (ans[55] === 'askabout') scores.aware += 3;
-            else if (ans[55] === 'deleteit') scores.redflags += 3;
-            else if (ans[55] === 'hotterpic') scores.redflags += 4;
-            else scores.aware += 2;
-            if (ans[58] === 'rightrp') scores.dating += 3;
-            else if (ans[58] === 'picky') scores.dating += 2;
-            else if (ans[58] === 'pushaway') scores.aware += 2;
-            else scores.dating += 2;
-            if (ans[61] === 'secure') scores.aware += 3;
-            else if (ans[61] === 'anxious') scores.redflags += 3;
-            else if (ans[61] === 'avoidant') scores.redflags += 4;
-            else scores.aware += 1;
-            if (ans[64] === 'greenflag') scores.aware += 3;
-            else if (ans[64] === 'midflag') scores.aware += 3;
-            else if (ans[64] === 'knowwhatiam') scores.aware += 2;
-            else scores.redflags += 4;
-        }
-
-        function getLabel(t) {
-            if (t <= 10) return 'Bro Actually Has Emotional Intelligence';
-            if (t <= 20) return 'Rare W. Don\'t Ruin It.';
-            if (t <= 30) return 'You\'re Kinda Toxic Ngl';
-            if (t <= 40) return 'Walking Red Flag';
-            if (t <= 50) return 'Heartbreaker';
-            if (t <= 60) return 'Godspeed To Your Future Partner';
-            return 'Absolutely Unhinged';
-        }
-
-        function getLevel(t) {
-            if (t <= 10) return 'Level 1';
-            if (t <= 20) return 'Level 2';
-            if (t <= 30) return 'Level 3';
-            if (t <= 40) return 'Level 4';
-            if (t <= 50) return 'Level 5';
-            if (t <= 60) return 'Level 6';
-            return 'Level 7';
-        }
-
-        function getCatComment(c, v) {
-            var p = v / maxScores[c] * 100;
+        function getCatComment(c, p) {
             if (p >= 66) {
                 if (c === 'texting') return 'Your chat history needs therapy. 💀';
                 if (c === 'dating') return 'Your exes deserve compensation. 💀';
@@ -2377,31 +2384,220 @@
             }
         }
 
-        function showResults() {
-            calcScores();
-            var total = scores.texting + scores.dating + scores.redflags + scores.aware;
-            var label = getLabel(total);
-            var level = getLevel(total);
-
-            document.getElementById('resScore').textContent = total;
-            document.getElementById('resTitle').textContent = label;
-            document.getElementById('resLevel').textContent = level;
+        function showResults(result) {
+            if (!result || !result.categories) return;
+            stopCheckoutPolling();
+            document.getElementById('resScore').textContent = result.score;
+            document.getElementById('resTitle').textContent = result.label;
+            document.getElementById('resLevel').textContent = result.level;
 
             var cats = ['texting', 'dating', 'redflags', 'aware'];
             var ids = ['Texting', 'Dating', 'Red', 'Aware'];
             for (var i = 0; i < cats.length; i++) {
-                var p = Math.round(scores[cats[i]] / maxScores[cats[i]] * 100);
+                var p = Math.max(0, Math.min(100, Number(result.categories[cats[i]]) || 0));
                 var bar = document.getElementById('bar' + ids[i]);
                 var pct = document.getElementById('pct' + ids[i]);
                 var com = document.getElementById('com' + ids[i]);
                 if (bar) bar.style.width = p + '%';
                 if (pct) pct.textContent = p + '%';
-                if (com) com.textContent = getCatComment(cats[i], scores[cats[i]]);
+                if (com) com.textContent = getCatComment(cats[i], p);
             }
 
             document.querySelectorAll('.s').forEach(function(s) { s.classList.remove('act'); });
             var rc = document.getElementById('resultCard');
             if (rc) rc.style.display = 'flex';
+            try {
+                sessionStorage.removeItem('redflagQuizState');
+                sessionStorage.removeItem('redflagCheckoutSession');
+                sessionStorage.removeItem('redflagCheckoutEmail');
+            } catch (error) {}
+        }
+
+        function persistQuizState(returningFromCheckout) {
+            try {
+                sessionStorage.setItem('redflagQuizState', JSON.stringify({
+                    name: nm,
+                    answers: ans,
+                    screen: st,
+                    returningFromCheckout: Boolean(returningFromCheckout)
+                }));
+            } catch (error) {}
+        }
+
+        function restoreQuizState() {
+            try {
+                var saved = JSON.parse(sessionStorage.getItem('redflagQuizState') || 'null');
+                if (!saved || !saved.answers || typeof saved.answers !== 'object') return null;
+                nm = typeof saved.name === 'string' ? saved.name : '';
+                ans = saved.answers;
+                st = Number(saved.screen) || 0;
+                return saved;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function setCheckoutStatus(message, type) {
+            var status = document.getElementById('checkoutStatus');
+            status.className = 'pw-checkout-status';
+            if (type) status.classList.add(type);
+            status.textContent = message;
+        }
+
+        function stopCheckoutPolling() {
+            checkoutPollActive = false;
+            if (checkoutPollTimer) clearTimeout(checkoutPollTimer);
+            checkoutPollTimer = null;
+        }
+
+        function setCheckoutWaiting(waiting) {
+            var button = document.getElementById('unlockBtn');
+            var email = document.getElementById('checkoutEmail');
+            button.disabled = waiting;
+            email.disabled = waiting;
+            button.innerHTML = waiting
+                ? 'Waiting for payment…'
+                : 'Reveal My Results — <span class="price-highlight">$4.99</span>';
+        }
+
+        function pollCheckoutStatus(sessionToken) {
+            stopCheckoutPolling();
+            checkoutPollActive = true;
+            setCheckoutWaiting(true);
+            setCheckoutStatus('Checkout opened. Pay with the same email and this tab will unlock automatically.');
+
+            async function check() {
+                if (!checkoutPollActive) return;
+                try {
+                    var response = await fetch('/api/checkout-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ session_token: sessionToken })
+                    });
+                    var data = await response.json().catch(function() { return {}; });
+
+                    if (response.ok && data.paid === true && data.result) {
+                        setCheckoutStatus('Payment verified. Loading your result…', 'success');
+                        stopCheckoutPolling();
+                        setTimeout(function() { showResults(data.result); }, 350);
+                        return;
+                    }
+
+                    if (response.status === 401 || response.status === 402) {
+                        stopCheckoutPolling();
+                        setCheckoutWaiting(false);
+                        try { sessionStorage.removeItem('redflagCheckoutSession'); } catch (error) {}
+                        setCheckoutStatus(data.error || 'This checkout session can no longer unlock.', 'error');
+                        return;
+                    }
+
+                    if (!response.ok && response.status < 500) {
+                        throw new Error(data.error || 'Payment status could not be checked.');
+                    }
+
+                    setCheckoutStatus('Waiting for Gumroad to confirm payment… Keep this tab open.');
+                } catch (error) {
+                    setCheckoutStatus('Still waiting for payment confirmation…');
+                }
+
+                if (checkoutPollActive) checkoutPollTimer = setTimeout(check, 2500);
+            }
+
+            check();
+        }
+
+        async function startCheckout(event) {
+            event.preventDefault();
+            var emailInput = document.getElementById('checkoutEmail');
+            var email = emailInput.value.trim().toLowerCase();
+            var fallback = document.getElementById('checkoutFallback');
+
+            fallback.hidden = true;
+            if (!emailInput.checkValidity()) {
+                emailInput.reportValidity();
+                setCheckoutStatus('Enter the email you will use at Gumroad.', 'error');
+                return;
+            }
+
+            // Open immediately so browsers do not block the tab while the server prepares checkout.
+            var checkoutWindow = window.open('about:blank', '_blank');
+            if (checkoutWindow) checkoutWindow.opener = null;
+            setCheckoutWaiting(true);
+            setCheckoutStatus('Preparing secure checkout…');
+            persistQuizState(true);
+
+            try {
+                var response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email, answers: ans })
+                });
+                var data = await response.json().catch(function() { return {}; });
+                if (!response.ok || data.success !== true || !data.session_token || !data.checkout_url) {
+                    throw new Error(data.error || 'Checkout could not be started.');
+                }
+
+                try {
+                    sessionStorage.setItem('redflagCheckoutSession', data.session_token);
+                    sessionStorage.setItem('redflagCheckoutEmail', email);
+                } catch (error) {}
+
+                fallback.href = data.checkout_url;
+                if (checkoutWindow) {
+                    checkoutWindow.location.replace(data.checkout_url);
+                } else {
+                    fallback.hidden = false;
+                }
+                pollCheckoutStatus(data.session_token);
+            } catch (error) {
+                if (checkoutWindow) checkoutWindow.close();
+                setCheckoutWaiting(false);
+                setCheckoutStatus(error.message || 'Checkout could not be started.', 'error');
+            }
+        }
+
+        async function verifyPurchase(event) {
+            event.preventDefault();
+            var input = document.getElementById('licenseKey');
+            var button = document.getElementById('licenseButton');
+            var status = document.getElementById('licenseStatus');
+            var licenseKey = input.value.trim();
+
+            status.className = 'pw-license-status';
+            if (licenseKey.length < 8) {
+                status.textContent = 'Paste the license key from your Gumroad receipt.';
+                status.classList.add('error');
+                input.focus();
+                return;
+            }
+
+            button.disabled = true;
+            button.textContent = 'Checking…';
+            status.textContent = 'Verifying your purchase securely with Gumroad…';
+
+            try {
+                var response = await fetch('/api/verify-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ license_key: licenseKey, answers: ans })
+                });
+                var data = await response.json().catch(function() { return {}; });
+
+                if (!response.ok || data.verified !== true || !data.result) {
+                    throw new Error(data.error || 'That purchase could not be verified.');
+                }
+
+                input.value = '';
+                status.textContent = 'Payment verified. Loading your result…';
+                status.classList.add('success');
+                setTimeout(function() { showResults(data.result); }, 450);
+            } catch (error) {
+                status.textContent = error.message || 'Verification failed. Please try again.';
+                status.classList.add('error');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Unlock';
+            }
         }
 
         // ===== PAID VERDICT GATE =====
@@ -2415,6 +2611,8 @@
                 pw.style.transform = 'translateX(0)';
             }
             document.getElementById('unlockBtn').style.display = 'flex';
+            st = 67;
+            persistQuizState(false);
         }
 
         // ===== TYPEWRITER =====
@@ -2465,6 +2663,7 @@
             if (t) { t.classList.add('act');
                 st = id; }
             vibrate(10);
+            persistQuizState(false);
 
             // Analysis → Roast transitions
             if (id === 2) { setTimeout(function() { tw('roast1', R.name);
@@ -2557,6 +2756,9 @@
         document.getElementById('s63').onclick = function() { roastTap(64); };
         document.getElementById('s66').onclick = function() { roastTap(67); };
 
+        document.getElementById('checkoutForm').addEventListener('submit', startCheckout);
+        document.getElementById('licenseForm').addEventListener('submit', verifyPurchase);
+
         document.getElementById('startBtn').addEventListener('click', function() {
             var o = document.getElementById('ov');
             o.classList.remove('fd');
@@ -2577,6 +2779,7 @@
 
         document.getElementById('nameBtn').addEventListener('click', function() {
             nm = document.getElementById('nameIn').value.trim() || 'friend';
+            persistQuizState(false);
             go(2);
         });
 
@@ -2590,6 +2793,7 @@
                 var b = document.getElementById('btn' + sid);
                 if (b) b.classList.remove('off');
                 vibrate(8);
+                persistQuizState(false);
             });
         });
 
@@ -2635,7 +2839,23 @@
 
         function vibrate(ms) { if (navigator.vibrate) navigator.vibrate(ms); }
 
-        window.addEventListener('DOMContentLoaded', function() { go(0); });
+        window.addEventListener('DOMContentLoaded', function() {
+            var saved = restoreQuizState();
+            var sessionToken = null;
+            var checkoutEmail = '';
+            try {
+                sessionToken = sessionStorage.getItem('redflagCheckoutSession');
+                checkoutEmail = sessionStorage.getItem('redflagCheckoutEmail') || '';
+            } catch (error) {}
+
+            if (saved && (saved.returningFromCheckout || Number(saved.screen) === 67 || sessionToken)) {
+                showPaywall();
+                if (checkoutEmail) document.getElementById('checkoutEmail').value = checkoutEmail;
+                if (sessionToken) pollCheckoutStatus(sessionToken);
+            } else {
+                go(0);
+            }
+        });
     </script>
 
 </body>
